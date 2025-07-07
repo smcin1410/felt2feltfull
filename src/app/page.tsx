@@ -1,6 +1,5 @@
-// src/app/page.tsx
-// This version fixes the "doesn't have a root layout" error by ensuring
-// all content is wrapped within a single <main> element.
+// This is the correct code for: src/app/page.tsx
+// It imports all the homepage components and arranges them in the correct layout.
 
 import Header from '@/components/homepage/Header';
 import UpcomingTournaments from '@/components/homepage/UpcomingTournaments';
