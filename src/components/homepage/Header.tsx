@@ -1,4 +1,4 @@
-// Create this file at: src/components/homepage/Header.tsx
+// Corrected Code for: src/components/homepage/Header.tsx
 import React from 'react';
 
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
                 Your Personal Poker Concierge
             </h1>
             <p className="mt-4 text-lg text-gray-300">
-                Don't just find a random trip. Design the perfect one. Tell us what you're looking for, and we'll point you to the right felt.
+                Don&apos;t just find a random trip. Design the perfect one. Tell us what you&apos;re looking for, and we&apos;ll point you to the right felt.
             </p>
             <div className="mt-8">
                 <a href="#" className="inline-block bg-cyan-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-cyan-600 transition-colors shadow-[0_0_15px_rgba(34,211,238,0.8)]">

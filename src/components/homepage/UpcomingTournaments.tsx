@@ -1,8 +1,7 @@
-// Create this file at: src/components/homepage/UpcomingTournaments.tsx
+// Corrected Code for: src/components/homepage/UpcomingTournaments.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 
 interface Tournament {
   _id: string;

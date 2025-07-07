@@ -1,15 +1,14 @@
-// Create this file at: src/components/homepage/LatestIntel.tsx
+// Corrected Code for: src/components/homepage/LatestIntel.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Note: Ensure your MongoDB 'posts' collection includes these fields.
 interface Post {
   _id: string;
   title: string;
-  slug: string; // e.g., "that-little-card-is-your-biggest-comp"
+  slug: string;
   excerpt: string;
   imageUrl: string;
 }

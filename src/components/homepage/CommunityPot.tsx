@@ -1,6 +1,4 @@
-// Create this file at: src/components/homepage/CommunityPot.tsx
-// The error log pointed to this file. The "Unexpected eof" error means the file was likely incomplete.
-// Please replace the entire contents of your local CommunityPot.tsx file with the code below.
+// Corrected Code for: src/components/homepage/CommunityPot.tsx
 import React from 'react';
 import Image from 'next/image';
 
