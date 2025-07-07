@@ -1,40 +1,23 @@
-// src/components/homepage/FindNextFelt.tsx
-import Image from 'next/image';
-import Link from 'next/link';
+// Create this file at: src/components/homepage/Header.tsx
+import React from 'react';
 
-const destinations = [
-  // Note: Add these images to your `public/images` directory
-  { name: 'Las Vegas', image: '/images/las-vegas.jpg', slug: 'las-vegas' },
-  { name: 'South Florida', image: '/images/south-florida.jpg', slug: 'south-florida' },
-  { name: 'London', image: '/images/london.jpg', slug: 'london' },
-];
-
-const FindNextFelt = () => {
+const Header = () => {
   return (
-    <section>
-      <h2 className="text-3xl font-bold text-center mb-8 text-cyan-400" style={{ textShadow: '0 0 8px #22d3ee' }}>
-        Find Your Next Felt
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {destinations.map((dest) => (
-          <Link href={`/destinations/${dest.slug}`} key={dest.name}>
-            <div className="relative h-80 rounded-lg overflow-hidden group cursor-pointer shadow-lg">
-              <Image
-                src={dest.image}
-                alt={dest.name}
-                layout="fill"
-                objectFit="cover"
-                className="transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end p-6">
-                <h3 className="text-white text-3xl font-bold drop-shadow-lg">{dest.name}</h3>
-              </div>
+    <div className="text-center py-16 bg-gray-900">
+        <div className="p-8 rounded-lg max-w-3xl mx-auto bg-gray-800 border border-gray-700">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl text-cyan-400" style={{ textShadow: '0 0 10px rgba(34, 211, 238, 0.7)' }}>
+                Your Personal Poker Concierge
+            </h1>
+            <p className="mt-4 text-lg text-gray-300">
+                Don't just find a random trip. Design the perfect one. Tell us what you're looking for, and we'll point you to the right felt.
+            </p>
+            <div className="mt-8">
+                <a href="#" className="inline-block bg-cyan-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-cyan-600 transition-colors shadow-[0_0_15px_rgba(34,211,238,0.8)]">
+                    Find Your Action
+                </a>
             </div>
-          </Link>
-        ))}
-      </div>
-    </section>
+        </div>
+    </div>
   );
 };
-export default FindNextFelt;
-```typescript
+export default Header;

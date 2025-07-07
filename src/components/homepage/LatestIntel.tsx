@@ -1,4 +1,4 @@
-// src/components/homepage/LatestIntel.tsx
+// Create this file at: src/components/homepage/LatestIntel.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -52,6 +52,7 @@ const LatestIntel = () => {
                         alt={post.title}
                         layout="fill"
                         objectFit="cover"
+                        onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x600/1f2937/7dd3fc?text=Blog+Post'; }}
                     />
                 </div>
                 <div className="p-8">

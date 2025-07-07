@@ -1,4 +1,4 @@
-// src/components/homepage/UpcomingTournaments.tsx
+// Create this file at: src/components/homepage/UpcomingTournaments.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -60,4 +60,3 @@ const UpcomingTournaments = () => {
   );
 };
 export default UpcomingTournaments;
-```typescript
