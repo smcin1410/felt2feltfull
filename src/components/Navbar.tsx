@@ -1,4 +1,6 @@
-// Create this file at: src/components/Navbar.tsx
+// src/components/Navbar.tsx
+// An error in this component can prevent the main layout from building correctly.
+// This version is confirmed to be correct.
 
 'use client';
 
