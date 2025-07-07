@@ -1,11 +1,12 @@
 // Create this file at: src/components/homepage/CommunityPot.tsx
+// The error log pointed to this file. The "Unexpected eof" error means the file was likely incomplete.
+// Please replace the entire contents of your local CommunityPot.tsx file with the code below.
 import React from 'react';
 import Image from 'next/image';
 
 const CommunityPot = () => {
     return (
         <section className="relative text-center py-20 rounded-lg overflow-hidden border border-gray-700">
-            {/* Note: Add a suitable background image to your `public` folder */}
             <Image
                 src="/community-bg.jpg"
                 alt="Community background"
@@ -32,4 +33,3 @@ const CommunityPot = () => {
     );
 };
 export default CommunityPot;
-
