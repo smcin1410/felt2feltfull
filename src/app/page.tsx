@@ -1,4 +1,4 @@
-// src/app/page.tsx
+// This is the correct code for: src/app/page.tsx
 // This version fixes the "doesn't have a root layout" error by ensuring
 // all content is wrapped within a single <main> element.
 
