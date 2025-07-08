@@ -1,4 +1,6 @@
 // src/lib/mongodb.ts
+// This is the corrected and more robust version of the MongoDB connection utility.
+// It specifies the ServerApiVersion for better compatibility with MongoDB Atlas.
 
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
