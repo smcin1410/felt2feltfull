@@ -2,18 +2,6 @@
 
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
-// --- Vercel Build Debugging ---
-console.log('--- Checking Environment Variables ---');
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('MONGODB_URI is set:', !!process.env.MONGODB_URI);
-if (process.env.MONGODB_URI) {
-  console.log('MONGODB_URI length:', process.env.MONGODB_URI.length);
-  console.log('MONGODB_URI starts with:', process.env.MONGODB_URI.substring(0, 15) + '...');
-}
-console.log('--- End of Environment Variable Check ---');
-// -----------------------------
-
-
 // Check if the MongoDB URI is set in the environment variables.
 // This is a crucial security measure to avoid hardcoding credentials.
 if (!process.env.MONGODB_URI) {
