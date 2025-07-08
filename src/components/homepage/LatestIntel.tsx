@@ -1,4 +1,3 @@
-// Corrected Code for: src/components/homepage/LatestIntel.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -10,7 +9,7 @@ interface Post {
   title: string;
   slug: string;
   excerpt: string;
-  imageUrl: string;
+  image: string; // The API sends 'image'
 }
 
 const LatestIntel = () => {
@@ -23,8 +22,11 @@ const LatestIntel = () => {
       try {
         const res = await fetch('/api/blog');
         if (!res.ok) throw new Error('Failed to fetch post');
-        const posts = await res.json();
-        if (posts.length > 0) setPost(posts[0]);
+
+        // **FIX 1: Destructure 'data' which is an array of posts**
+        const { data: posts } = await res.json();
+        if (posts && posts.length > 0) setPost(posts[0]);
+
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
       } finally {
@@ -43,15 +45,15 @@ const LatestIntel = () => {
         {loading && <div className="min-h-[200px] flex items-center justify-center"><p>Loading latest intel...</p></div>}
         {error && <div className="min-h-[200px] flex items-center justify-center"><p className="text-red-400">Error: {error}</p></div>}
         {post && (
-          <Link href={`/blog/${post.slug}`} className="block hover:opacity-90 transition-opacity">
+          <Link href={`/blog/${post.slug || post._id}`} className="block hover:opacity-90 transition-opacity">
             <div className="grid md:grid-cols-2 gap-0 items-center">
                 <div className="relative h-80 md:h-full rounded-l-lg overflow-hidden">
                     <Image 
-                        src={post.imageUrl || '/images/default-blog.jpg'}
+                        // **FIX 2: Use post.image and a valid fallback**
+                        src={post.image}
                         alt={post.title}
-                        layout="fill"
-                        objectFit="cover"
-                        onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x600/1f2937/7dd3fc?text=Blog+Post'; }}
+                        fill
+                        className="object-cover"
                     />
                 </div>
                 <div className="p-8">

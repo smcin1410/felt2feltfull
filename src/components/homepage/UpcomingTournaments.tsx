@@ -1,12 +1,13 @@
-// Corrected Code for: src/components/homepage/UpcomingTournaments.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
 
+// Define the structure of a single tournament object
 interface Tournament {
   _id: string;
-  name: string;
-  venue: string;
+  seriesName: string;
+  city: string;
   startDate: string;
 }
 
@@ -19,15 +20,21 @@ const UpcomingTournaments = () => {
     const fetchTournaments = async () => {
       try {
         const res = await fetch('/api/tournaments');
-        if (!res.ok) throw new Error('Failed to fetch tournaments');
-        const data = await res.json();
-        setTournaments(data);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        
+        // **FIX 1: Get the 'data' property from the JSON response**
+        const responseData = await res.json();
+        setTournaments(responseData.data);
+
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
       } finally {
         setLoading(false);
       }
     };
+    
     fetchTournaments();
   }, []);
 
@@ -44,9 +51,10 @@ const UpcomingTournaments = () => {
                 {tournaments.length > 0 ? (
                 tournaments.map((t) => (
                     <div key={t._id} className="bg-gray-700 p-4 rounded-lg text-left">
-                    <h3 className="font-bold text-lg text-white">{t.name}</h3>
-                    <p className="text-gray-400">{t.venue}</p>
-                    <p className="text-sm text-cyan-400">{new Date(t.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                      {/* **FIX 2: Use the correct property names from your data** */}
+                      <h3 className="font-bold text-lg text-white">{t.seriesName}</h3>
+                      <p className="text-gray-400">{t.city}</p>
+                      <p className="text-sm text-cyan-400">{format(new Date(t.startDate), 'MMM dd, yyyy')}</p>
                     </div>
                 ))
                 ) : (
@@ -58,4 +66,5 @@ const UpcomingTournaments = () => {
     </section>
   );
 };
+
 export default UpcomingTournaments;

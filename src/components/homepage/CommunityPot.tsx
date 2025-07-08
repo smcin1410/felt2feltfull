@@ -1,47 +1,54 @@
+// src/components/CommunityPot.tsx
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react'; // Import useState
 
-async function getPosts() {
-  const res = await fetch('http://localhost:3000/api/posts', {
-    cache: 'no-store',
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch posts');
-  }
-  return res.json();
-}
+export default function CommunityPot() {
+  const originalSrc = "/stock-photos/southfloridanight.jpeg";
+  const fallbackSrc = "/stock-photos/card.jpeg"; // Use an existing fallback image
 
-export default async function CommunityPot() {
-  const { data: posts } = await getPosts();
+  // State to manage the current image source
+  const [imageSrc, setImageSrc] = useState(originalSrc);
+  // State to track if an error has occurred
+  const [hasError, setHasError] = useState(false);
+
+  const handleImageError = () => {
+    if (!hasError) { // Prevent infinite loop if fallback also fails
+      console.error(`Error loading Community Pot image: ${originalSrc}. Attempting fallback...`);
+      setImageSrc(fallbackSrc);
+      setHasError(true); // Mark that an error occurred
+    } else {
+      console.error(`Fallback image also failed for Community Pot: ${fallbackSrc}.`);
+      // Optionally, set to a completely blank image or hide the image
+      // setImageSrc('/placeholder.png'); // A very basic, guaranteed to exist image
+    }
+  };
 
   return (
-    <div className="bg-black text-white py-12 px-4 md:px-8">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold mb-2">THE COMMUNITY POT</h2>
-        <p className="mb-6">Share your stories, find travel partners, and get the real scoop from players on the felt.</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {posts.slice(0, 3).map((post: any) => (
-            <Link href={`/community/${post._id}`} key={post._id}>
-               <div className="group relative block w-full h-64 overflow-hidden rounded-lg shadow-lg">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 p-4 flex flex-col justify-end">
-                  <h3 className="text-xl font-bold">{post.title}</h3>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-        <Button variant="outline" asChild>
-          <Link href="/community">Join The Conversation</Link>
-        </Button>
+    <section className="relative w-full h-64 overflow-hidden bg-gray-900 text-white flex flex-col justify-center items-center p-4 rounded-lg shadow-lg">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0 h-full">
+        <Image
+          src={imageSrc} // Use the state variable for src
+          alt="Community Pot Background"
+          fill
+          className="object-cover opacity-20"
+          sizes="100vw"
+          onError={handleImageError}
+        />
       </div>
-    </div>
+
+      {/* Content */}
+      <div className="relative z-10 text-center">
+        <h2 className="text-3xl font-bold mb-2">THE COMMUNITY POT</h2>
+        <p className="text-lg mb-4">
+          Share your stories, find travel partners, and get the real scoop from players on the felt.
+        </p>
+        <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+          Join The Conversation
+        </button>
+      </div>
+    </section>
   );
 }

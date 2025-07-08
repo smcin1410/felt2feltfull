@@ -3,7 +3,7 @@ import dbConnect from '@/lib/dbConnect';
 import Tournament from '@/models/Tournament';
 import { getRandomImage } from '@/lib/image-utils'; // Import the new function
 
-export async function GET(request) {
+export async function GET(_request: Request) {
   await dbConnect();
 
   try {
@@ -17,6 +17,9 @@ export async function GET(request) {
 
     return NextResponse.json({ success: true, data: tournamentsWithImages });
   } catch (error) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
-  }
+  // Check the error type before using it
+  const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+  
+  return NextResponse.json({ success: false, error: errorMessage }, { status: 400 });
+}
 }
