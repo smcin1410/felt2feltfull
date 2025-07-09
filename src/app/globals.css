@@ -1,7 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ... any other global styles can follow */
+/* Placed within src/globals.css */
+
+/* Neon Glow Effect Utility Class */
+.text-glow-neon {
+  color: #E5E7EB; /* text-primary */
+  text-shadow:
+    0 0 5px #22D3EE,   /* accent-neon */
+    0 0 10px #22D3EE,
+    0 0 20px #22D3EE,
+    0 0 40px #EC4899, /* accent-hotpink for a hint of color variance */
+    0 0 80px #EC4899;
+}
+
+/* Pulsing Animation Keyframes */
+@keyframes pulse-neon {
+  0%, 100% {
+    text-shadow:
+      0 0 5px #22D3EE,
+      0 0 10px #22D3EE,
+      0 0 20px #22D3EE,
+      0 0 40px #EC4899,
+      0 0 80px #EC4899;
+  }
+  50% {
+    text-shadow:
+      0 0 7px #22D3EE,
+      0 0 15px #22D3EE,
+      0 0 30px #22D3EE,
+      0 0 60px #EC4899,
+      0 0 100px #EC4899;
+  }
+}
+
+/* Applying the animation to the class */
+.text-glow-neon {
+  animation: pulse-neon 4s infinite linear;
+}
+
+/* Accessibility: Disable animation for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .text-glow-neon {
+    animation: none;
+  }
+}
 @layer base {
   :root {
     /* Define your custom color palette as CSS variables */
