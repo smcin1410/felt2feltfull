@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google' // This line can be removed if Inter is no longer used
 import './globals.css'
-
-// const inter = Inter({ subsets: ['latin'] }) // This line can be removed
+import { ItineraryProvider } from './context/ItineraryContext'
+import Navbar from '@/components/Navbar'
+import FloatingItinerary from '@/components/FloatingItinerary'
 
 export const metadata: Metadata = {
   title: 'Felt2Felt',
@@ -16,9 +16,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* Apply the font-sans class here */}
-      <body className={'font-sans bg-background text-text-primary'}>
-        {children}
+      <body className="font-sans bg-[#0D0D0D] text-white min-h-screen">
+        <ItineraryProvider>
+          <Navbar />
+          <main className="pt-16">
+            {children}
+          </main>
+          <FloatingItinerary />
+        </ItineraryProvider>
       </body>
     </html>
   )

@@ -3,10 +3,16 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 
-// Define a minimal structure for a Destination to get the city
+// Define the structure for a Destination from the API
 interface Destination {
-  city: string;
-  // include other properties if needed for later steps
+  id: number;
+  name: string;
+  country: string;
+  description: string;
+  image: string;
+  pokerRooms: number;
+  averageBuyIn: string;
+  bestTime: string;
 }
 
 export default function TripDesignerPage() {
@@ -31,7 +37,7 @@ export default function TripDesignerPage() {
         const data: Destination[] = await response.json();
 
         // Process the data to get a unique, sorted list of cities
-        const uniqueCities = Array.from(new Set(data.map(dest => dest.city))).sort();
+        const uniqueCities = Array.from(new Set(data.map(dest => dest.name))).sort();
         setCities(uniqueCities);
         
       } catch (err) {
@@ -56,57 +62,75 @@ export default function TripDesignerPage() {
         <title>Interactive Trip Planner - Felt2Felt</title>
         <meta name="description" content="Design your perfect poker trip." />
       </Head>
-      <main className="container mx-auto px-4 py-8 text-white">
-        <h1 className="text-4xl font-bold mb-4 text-center text-accent-light">INTERACTIVE TRIP PLANNER</h1>
-        <p className="text-center text-gray-400 mb-12">Build your custom poker itinerary in a few easy steps.</p>
+      <main className="min-h-screen bg-[#0D0D0D]">
+        <div className="container mx-auto px-4 py-12">
+          <h1 className="text-5xl font-orbitron font-bold mb-4 text-center neon-glow">INTERACTIVE TRIP PLANNER</h1>
+          <p className="text-center text-gray-300 mb-16 text-lg">Build your custom poker itinerary in a few easy steps</p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: The Steps */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Step 1: Select a Destination */}
-            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-bold mb-4">
-                <span className="bg-accent-hotpink text-black rounded-full px-3 py-1 mr-3">1</span>
-                Select a Destination
-              </h2>
-              <label htmlFor="city-select" className="block mb-2 text-sm font-medium text-gray-300">
-                Choose a city to begin your journey.
-              </label>
-              <select
-                id="city-select"
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
-                disabled={loading || !!error} // Disable if loading or if an error occurred
-                className="w-full bg-gray-700 text-white p-3 rounded-md border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-accent-hotpink disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading && <option>Loading cities...</option>}
-                {error && <option>Could not load cities</option>}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Left Column: The Steps */}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Step 1: Select a Destination */}
+              <div className="card-style p-8">
+                <h2 className="text-3xl font-orbitron font-bold mb-6 flex items-center text-white">
+                  <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-black rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">1</span>
+                  Select a Destination
+                </h2>
+                <label htmlFor="city-select" className="block mb-4 text-lg font-medium text-gray-300">
+                  Choose a city to begin your journey
+                </label>
+                
+                {loading && (
+                  <div className="flex items-center gap-4 p-4 bg-gray-700/50 rounded-lg">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-cyan-400"></div>
+                    <span className="text-gray-300">Loading cities...</span>
+                  </div>
+                )}
+                
+                {error && (
+                  <div className="p-4 bg-red-900/20 border border-red-500/30 rounded-lg mb-4">
+                    <p className="text-red-400 font-semibold">{error}</p>
+                  </div>
+                )}
+                
                 {!loading && !error && (
-                  <>
+                  <select
+                    id="city-select"
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                    className="filter-btn w-full text-lg"
+                  >
                     <option value="">-- Select a City --</option>
                     {cities.map(city => (
                       <option key={city} value={city}>{city}</option>
                     ))}
-                  </>
+                  </select>
                 )}
-              </select>
-              {error && <p className="text-red-500 mt-2 text-sm">{error}</p>}
-            </div>
-            {/* Future steps will be added here */}
-            <div className="bg-gray-800/50 p-6 rounded-lg shadow-inner text-gray-500">
-                <h2 className="text-xl font-bold mb-2">2. Find Tournaments & Events (Coming Soon)</h2>
-            </div>
-          </div>
-
-          {/* Right Column: Trip Summary */}
-          <aside>
-            <div className="bg-gray-800 p-6 rounded-lg shadow-lg sticky top-24">
-              <h2 className="text-2xl font-bold mb-4 border-b-2 border-accent-hotpink pb-2">Trip Summary</h2>
-              <div className="text-center text-gray-400 mt-6">
-                <p>Your trip summary will appear here once you add items to your itinerary.</p>
+              </div>
+              
+              {/* Future steps */}
+              <div className="bg-gray-800/30 p-8 rounded-xl border border-gray-700/30 opacity-60">
+                <h2 className="text-2xl font-orbitron font-bold mb-4 flex items-center text-gray-400">
+                  <span className="bg-gray-600 text-gray-400 rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">2</span>
+                  Find Tournaments & Events
+                </h2>
+                <p className="text-gray-400">Coming Soon</p>
               </div>
             </div>
-          </aside>
+
+            {/* Right Column: Trip Summary */}
+            <aside>
+              <div className="card-style p-8 sticky top-24">
+                <h2 className="text-2xl font-orbitron font-bold mb-6 neon-glow-pink border-b-2 border-pink-500/30 pb-4">Trip Summary</h2>
+                <div className="text-center text-gray-300 mt-8">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-700/50 rounded-full flex items-center justify-center">
+                    <span className="text-2xl">✈️</span>
+                  </div>
+                  <p className="leading-relaxed">Your trip summary will appear here once you add items to your itinerary.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
         </div>
       </main>
     </>

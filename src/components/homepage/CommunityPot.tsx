@@ -41,11 +41,11 @@ export default function CommunityPot() {
 
       {/* Content */}
       <div className="relative z-10 text-center">
-        <h2 className="text-3xl font-bold mb-2">THE COMMUNITY POT</h2>
+        <h2 className="text-3xl font-bold mb-2 font-orbitron neon-glow">THE COMMUNITY POT</h2>
         <p className="text-lg mb-4">
           Share your stories, find travel partners, and get the real scoop from players on the felt.
         </p>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+        <button className="btn-primary">
           Join The Conversation
         </button>
       </div>

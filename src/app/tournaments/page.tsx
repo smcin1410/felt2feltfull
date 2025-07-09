@@ -8,11 +8,16 @@ import { useItinerary } from '../context/ItineraryContext'; // Import the itiner
 // Define the structure of a Tournament object
 interface Tournament {
   _id: string;
-  series: string;
-  venue: string;
+  name: string;
   location: string;
-  startDate: string; // Assuming dates are strings in ISO format
+  buyIn: number;
+  date: string;
   endDate: string;
+  description: string;
+  image: string;
+  prizePool: number;
+  players: number;
+  status: string;
 }
 
 export default function TournamentCalendar() {
@@ -34,9 +39,7 @@ export default function TournamentCalendar() {
       try {
         const response = await fetch('/api/tournaments');
         if (!response.ok) {
-          // Provide a more specific error message
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to fetch tournaments');
+          throw new Error('Failed to fetch tournaments');
         }
         const data: Tournament[] = await response.json();
         setTournaments(data);
@@ -59,9 +62,9 @@ export default function TournamentCalendar() {
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = tournaments.filter(tournament =>
-      tournament.series.toLowerCase().includes(lowercasedQuery) ||
-      tournament.venue.toLowerCase().includes(lowercasedQuery) ||
-      tournament.location.toLowerCase().includes(lowercasedQuery)
+      tournament.name.toLowerCase().includes(lowercasedQuery) ||
+      tournament.location.toLowerCase().includes(lowercasedQuery) ||
+      tournament.description.toLowerCase().includes(lowercasedQuery)
     );
     setFilteredTournaments(filtered);
   }, [searchQuery, tournaments]);
@@ -79,71 +82,92 @@ export default function TournamentCalendar() {
         <title>Tournament Calendar - Felt2Felt</title>
         <meta name="description" content="Search for upcoming poker tournaments." />
       </Head>
-      <main className="container mx-auto px-4 py-8 text-white">
-        <h1 className="text-4xl font-bold mb-8 text-center text-accent-light">Tournament Calendar</h1>
+      <main className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-12">
+          <h1 className="text-5xl font-bold mb-4 text-center font-orbitron neon-glow">Tournament Calendar</h1>
+          <p className="text-center text-text-secondary mb-12 text-lg">Find your next big tournament</p>
 
-        {/* Search and Filter Controls */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
-          <input
-            type="text"
-            placeholder="Search by series, venue, or location..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-grow bg-gray-700 text-white placeholder-gray-400 p-3 rounded-md border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-accent-hotpink"
-          />
-          <button className="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-md transition-colors duration-300">
-            Filters
-          </button>
-        </div>
-
-        {/* Conditional Rendering for Loading, Error, and Content */}
-        {loading ? (
-          <div className="text-center text-accent-light">Loading tournaments...</div>
-        ) : error ? (
-          <div className="text-center text-red-500 bg-red-900/20 p-4 rounded-md">
-            <strong>Error:</strong> {error}
+          {/* Search and Filter Controls */}
+          <div className="flex flex-col md:flex-row gap-4 mb-12">
+            <input
+              type="text"
+              placeholder="Search by tournament name, location, or description..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-bar flex-grow"
+            />
+            <button className="filter-btn">
+              Filters
+            </button>
           </div>
-        ) : (
-          <div className="space-y-6">
-            {/* Tournament List */}
-            {filteredTournaments.length > 0 ? (
-              filteredTournaments.map(tournament => (
-                <div key={tournament._id} className="bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-center justify-between gap-4 hover:shadow-accent-hotpink/20 transition-shadow duration-300">
-                  <div className="flex items-center gap-4 text-center md:text-left">
-                    <div className="bg-accent-hotpink text-black font-bold p-3 rounded-md flex flex-col items-center justify-center w-20 h-20">
-                       <span className="text-sm">{formatDate(tournament.startDate).split(' ')[0]}</span>
-                       <span className="text-2xl">{formatDate(tournament.startDate).split(' ')[1]}</span>
+
+          {/* Loading State */}
+          {loading && (
+            <div className="text-center py-20">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-accent-neon mx-auto mb-6"></div>
+              <p className="text-text-secondary text-xl">Loading tournaments...</p>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <div className="text-center py-20">
+              <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-8 max-w-md mx-auto">
+                <p className="text-red-400 font-semibold text-lg">Error: {error}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Tournament List */}
+          {!loading && !error && (
+            <div className="space-y-6">
+              {filteredTournaments.length > 0 ? (
+                filteredTournaments.map(tournament => (
+                  <div key={tournament._id} className="card-style flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="flex items-center gap-6 text-center md:text-left">
+                      <div className="bg-gradient-to-br from-cyan-400 to-pink-500 text-black font-bold p-4 rounded-xl flex flex-col items-center justify-center w-24 h-24 shadow-lg">
+                         <span className="text-sm">{formatDate(tournament.date).split(' ')[0]}</span>
+                         <span className="text-2xl">{formatDate(tournament.date).split(' ')[1]}</span>
+                      </div>
+                      <div className="flex-1">
+                        <h2 className="text-2xl font-bold mb-2 font-orbitron neon-glow">{tournament.name}</h2>
+                        <p className="text-gray-300 text-lg mb-2">{tournament.location}</p>
+                        <p className="text-gray-400 mb-2">{tournament.description}</p>
+                        <div className="flex flex-wrap gap-4 text-sm">
+                          <span className="text-cyan-400">Buy-in: ${tournament.buyIn.toLocaleString()}</span>
+                          <span className="text-pink-400">Prize Pool: ${tournament.prizePool.toLocaleString()}</span>
+                          <span className="text-green-400">Players: {tournament.players}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h2 className="text-xl font-bold text-accent-light">{tournament.series}</h2>
-                      <p className="text-gray-400">{tournament.venue}, {tournament.location}</p>
+                    <div className="flex items-center gap-4 mt-4 md:mt-0">
+                      <button className="btn-secondary">
+                        View Details
+                      </button>
+                      <button
+                        onClick={() => addItem({
+                          _id: tournament._id,
+                          name: tournament.name,
+                          type: 'Tournament'
+                        })}
+                        className="btn-primary flex items-center gap-2"
+                      >
+                        <FaSuitcaseRolling />
+                        Add to Itinerary
+                      </button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 mt-4 md:mt-0">
-                    <button className="bg-gray-600 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-300">
-                      View Details
-                    </button>
-                    <button
-                      onClick={() => addItem({
-                        _id: tournament._id,
-                        name: tournament.series,
-                        type: 'Tournament'
-                      })}
-                      className="bg-accent-hotpink hover:bg-pink-500 text-black font-bold py-2 px-4 rounded-md flex items-center gap-2 transition-colors duration-300"
-                    >
-                      <FaSuitcaseRolling />
-                      Add to Itinerary
-                    </button>
+                ))
+              ) : (
+                <div className="text-center py-20">
+                  <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 p-12">
+                    <p className="text-text-secondary text-xl">No tournaments match your search.</p>
                   </div>
                 </div>
-              ))
-            ) : (
-              <div className="text-center text-gray-400 bg-gray-800 p-6 rounded-md">
-                No tournaments match your search.
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
       </main>
     </>
   );

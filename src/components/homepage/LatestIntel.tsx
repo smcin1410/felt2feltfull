@@ -38,7 +38,7 @@ const LatestIntel = () => {
 
   return (
     <section>
-      <h2 className="text-3xl font-bold text-center mb-8 text-cyan-400" style={{ textShadow: '0 0 8px #22d3ee' }}>
+      <h2 className="text-3xl font-bold text-center mb-8 font-orbitron neon-glow">
         Latest Intel from the Blog
       </h2>
       <div className="bg-gray-800 rounded-lg p-1 border border-gray-700 max-w-4xl mx-auto">

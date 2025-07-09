@@ -37,11 +37,11 @@ export default function FindNextFelt() {
 
       {/* Content */}
       <div className="relative z-10 text-center">
-        <h2 className="text-3xl font-bold mb-2">Find Your Next Felt!</h2>
+        <h2 className="text-3xl font-bold mb-2 font-orbitron neon-glow">Find Your Next Felt!</h2>
         <p className="text-lg mb-4">
           Let's find the perfect game for you.
         </p>
-        <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+        <button className="btn-secondary">
           Start Your Search
         </button>
       </div>
