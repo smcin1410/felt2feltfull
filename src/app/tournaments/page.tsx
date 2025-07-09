@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { FaSuitcaseRolling } from 'react-icons/fa'; // Using react-icons for the luggage icon
+import { FaSuitcaseRolling } from 'react-icons/fa';
+import { useItinerary } from '../context/ItineraryContext'; // Import the itinerary hook
 
 // Define the structure of a Tournament object
 interface Tournament {
@@ -15,6 +16,9 @@ interface Tournament {
 }
 
 export default function TournamentCalendar() {
+  // Get the addItem function from our global Itinerary Context
+  const { addItem } = useItinerary();
+
   // State for the full list of tournaments and the filtered list
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [filteredTournaments, setFilteredTournaments] = useState<Tournament[]>([]);
@@ -65,6 +69,7 @@ export default function TournamentCalendar() {
   // Helper function to format dates
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
+    // Return a 'Month Day' format, e.g., "Oct 26"
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
@@ -105,7 +110,7 @@ export default function TournamentCalendar() {
               filteredTournaments.map(tournament => (
                 <div key={tournament._id} className="bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-center justify-between gap-4 hover:shadow-accent-hotpink/20 transition-shadow duration-300">
                   <div className="flex items-center gap-4 text-center md:text-left">
-                    <div className="bg-accent-hotpink text-black font-bold p-3 rounded-md flex flex-col items-center justify-center w-20">
+                    <div className="bg-accent-hotpink text-black font-bold p-3 rounded-md flex flex-col items-center justify-center w-20 h-20">
                        <span className="text-sm">{formatDate(tournament.startDate).split(' ')[0]}</span>
                        <span className="text-2xl">{formatDate(tournament.startDate).split(' ')[1]}</span>
                     </div>
@@ -118,7 +123,14 @@ export default function TournamentCalendar() {
                     <button className="bg-gray-600 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-300">
                       View Details
                     </button>
-                    <button className="bg-accent-hotpink hover:bg-pink-500 text-black font-bold py-2 px-4 rounded-md flex items-center gap-2 transition-colors duration-300">
+                    <button
+                      onClick={() => addItem({
+                        _id: tournament._id,
+                        name: tournament.series,
+                        type: 'Tournament'
+                      })}
+                      className="bg-accent-hotpink hover:bg-pink-500 text-black font-bold py-2 px-4 rounded-md flex items-center gap-2 transition-colors duration-300"
+                    >
                       <FaSuitcaseRolling />
                       Add to Itinerary
                     </button>
