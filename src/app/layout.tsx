@@ -1,9 +1,9 @@
-import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Navbar from './components/Navbar'; // Assuming you have a Navbar component
-import { ItineraryProvider } from './context/ItineraryContext';
-import ItineraryButton from './components/ItineraryButton'; // We will create this next
+import Navbar from './components/Navbar'; // Corrected: Relative path
+import { ItineraryProvider } from './context/ItineraryContext'; // Corrected: Relative path
+import ItineraryButton from './components/ItineraryButton'; // Corrected: Relative path
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,8 +22,10 @@ export default function RootLayout({
       <body className={`${inter.className} bg-background-dark`}>
         <ItineraryProvider>
           <Navbar />
-          <main>{children}</main>
-          <ItineraryButton /> {/* Add the floating button here */}
+          <main className="pt-20"> {/* Add padding to main to offset fixed navbar */}
+            {children}
+          </main>
+          <ItineraryButton />
         </ItineraryProvider>
       </body>
     </html>
