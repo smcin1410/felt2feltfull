@@ -19,11 +19,17 @@ const handler = NextAuth({
         }
 
         try {
-          await dbConnect();
+          const connection = await dbConnect();
+          
+          // If no database connection available, return null
+          if (!connection) {
+            console.warn('Database connection not available during authentication');
+            return null;
+          }
           
           // Find user with password field included
-          const user = await User.findOne({ 
-            email: credentials.email.toLowerCase() 
+          const user = await User.findOne({
+            email: credentials.email.toLowerCase()
           }).select('+password');
 
           if (!user) {
@@ -68,7 +74,13 @@ const handler = NextAuth({
       // Handle Google OAuth
       if (account?.provider === 'google' && user) {
         try {
-          await dbConnect();
+          const connection = await dbConnect();
+          
+          // If no database connection available, skip database operations
+          if (!connection) {
+            console.warn('Database connection not available during JWT callback');
+            return token;
+          }
           
           let dbUser = await User.findOne({ email: user.email });
           
