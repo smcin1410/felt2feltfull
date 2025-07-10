@@ -38,7 +38,13 @@ export function useCollaboration({
   useEffect(() => {
     if (!session?.user?.id || !itineraryId) return;
 
+
     const channelName = getItineraryChannel(itineraryId);
+    if (!pusherClient) {
+      console.error('Pusher client not initialized');
+      toast.error('Real-time features are unavailable.');
+      return;
+    }
     const channel = pusherClient.subscribe(channelName);
     channelRef.current = channel;
 
@@ -132,7 +138,9 @@ export function useCollaboration({
 
     return () => {
       if (channelRef.current) {
-        pusherClient.unsubscribe(channelName);
+        if (pusherClient) {
+          pusherClient.unsubscribe(channelName);
+        }
         channelRef.current = null;
       }
       setIsConnected(false);
