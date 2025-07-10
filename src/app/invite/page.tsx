@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -20,7 +20,7 @@ interface InvitationData {
   expiresAt: string;
 }
 
-export default function InvitePage() {
+function InvitePageInner() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -37,8 +37,8 @@ export default function InvitePage() {
       setIsLoading(false);
       return;
     }
-
     fetchInvitation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const fetchInvitation = async () => {
@@ -222,6 +222,20 @@ export default function InvitePage() {
                 </button>
               )}
             </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function InvitePage() {
+  return (
+    <Suspense>
+      <InvitePageInner />
+    </Suspense>
+  );
+}
           )}
         </div>
       </div>
