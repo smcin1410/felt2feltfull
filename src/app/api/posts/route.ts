@@ -70,7 +70,7 @@ const mockCommunityPosts = [
   }
 ];
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     // Return mock data for community posts
     return NextResponse.json(mockCommunityPosts);

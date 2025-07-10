@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs'; // Changed to ES Module import
 
 const UserSchema = new mongoose.Schema({
     email: {

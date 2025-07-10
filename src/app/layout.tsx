@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { ItineraryProvider } from './context/ItineraryContext'
 import Navbar from '@/components/Navbar'
 import FloatingItinerary from '@/components/FloatingItinerary'
 
@@ -17,13 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans bg-[#0D0D0D] text-white min-h-screen">
-        <ItineraryProvider>
-          <Navbar />
-          <main className="pt-16">
-            {children}
-          </main>
-          <FloatingItinerary />
-        </ItineraryProvider>
+        <Navbar />
+        <main className="pt-16">
+          {children}
+        </main>
+        <FloatingItinerary />
       </body>
     </html>
   )

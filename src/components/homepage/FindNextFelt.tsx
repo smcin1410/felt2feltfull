@@ -39,7 +39,7 @@ export default function FindNextFelt() {
       <div className="relative z-10 text-center">
         <h2 className="text-3xl font-bold mb-2 font-orbitron neon-glow">Find Your Next Felt!</h2>
         <p className="text-lg mb-4">
-          Let's find the perfect game for you.
+          Let&apos;s find the perfect game for you.
         </p>
         <button className="btn-secondary">
           Start Your Search

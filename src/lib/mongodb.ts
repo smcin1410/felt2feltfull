@@ -29,7 +29,7 @@ let clientPromise: Promise<MongoClient>;
 // This is a Next.js-specific optimization.
 if (process.env.NODE_ENV === 'development') {
   // Check if the promise is already on the global object.
-  let globalWithMongo = global as typeof globalThis & {
+  const globalWithMongo = global as typeof globalThis & {
     _mongoClientPromise?: Promise<MongoClient>;
   };
 

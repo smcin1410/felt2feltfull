@@ -3,19 +3,8 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { FaPlus } from 'react-icons/fa';
-
-// Define the structure of a Post object
-interface Post {
-  _id: string;
-  author: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  replies: number;
-  likes: number;
-  category: string;
-  isBlogPost: boolean;
-}
+import { Post, PostFilters as FilterType, CreatePostForm } from '@/lib/types';
+import CreatePostModal from '@/components/community/CreatePostModal';
 
 
 export default function CommunityPage() {
@@ -23,8 +12,16 @@ export default function CommunityPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  // Enhanced filter state
+  const [filters, setFilters] = useState<FilterType>({
+    searchQuery: '',
+    selectedCategory: '',
+    selectedAuthor: undefined,
+    dateRange: undefined,
+    sortBy: 'newest'
+  });
 
   // Fetch community posts
   useEffect(() => {
@@ -50,19 +47,98 @@ export default function CommunityPage() {
     fetchPosts();
   }, []);
 
-  // Derive unique categories for the filter dropdown from the posts
-  const categories = Array.from(new Set(posts.map(post => post.category))).sort();
-
-  // Filter posts based on search query and selected category
+  // Enhanced filtering logic
   const filteredPosts = posts.filter(post => {
-    const searchMatch = searchQuery.toLowerCase() === '' ||
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.content.toLowerCase().includes(searchQuery.toLowerCase());
+    // Search query filter
+    if (filters.searchQuery) {
+      const query = filters.searchQuery.toLowerCase();
+      const matchesSearch =
+        post.title.toLowerCase().includes(query) ||
+        post.content.toLowerCase().includes(query) ||
+        post.author.toLowerCase().includes(query);
+      
+      if (!matchesSearch) return false;
+    }
 
-    const categoryMatch = selectedCity === '' || post.category === selectedCity;
+    // Category filter
+    if (filters.selectedCategory && post.category !== filters.selectedCategory) {
+      return false;
+    }
 
-    return searchMatch && categoryMatch;
+    // Author filter
+    if (filters.selectedAuthor && post.author !== filters.selectedAuthor) {
+      return false;
+    }
+
+    // Date range filter (if implemented)
+    if (filters.dateRange) {
+      const postDate = new Date(post.createdAt);
+      if (filters.dateRange.start) {
+        const startDate = new Date(filters.dateRange.start);
+        if (postDate < startDate) return false;
+      }
+      if (filters.dateRange.end) {
+        const endDate = new Date(filters.dateRange.end);
+        if (postDate > endDate) return false;
+      }
+    }
+
+    return true;
+  }).sort((a, b) => {
+    // Sort posts based on selected criteria
+    switch (filters.sortBy) {
+      case 'oldest':
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      case 'mostLiked':
+        return b.likes - a.likes;
+      case 'mostReplies':
+        return b.replies - a.replies;
+      case 'newest':
+      default:
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    }
   });
+
+  // Derive unique categories and authors for filters
+  const categories = Array.from(new Set(posts.map(post => post.category))).sort();
+  const authors = Array.from(new Set(posts.map(post => post.author))).sort();
+
+  // Handle filter changes
+  const handleFilterChange = (key: keyof FilterType, value: string | undefined) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  // Handle post creation
+  const handleCreatePost = async (postData: CreatePostForm) => {
+    try {
+      const response = await fetch('/api/posts/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to create post');
+      }
+
+      if (result.success && result.data) {
+        // Add the new post to the beginning of the posts array
+        setPosts(prevPosts => [result.data, ...prevPosts]);
+        setIsCreateModalOpen(false);
+        
+        // Show success feedback (you could add a toast notification here)
+        console.log('Post created successfully:', result.data);
+      }
+    } catch (error) {
+      console.error('Error creating post:', error);
+      // Handle error (you could show an error toast here)
+      throw error; // Re-throw to let the modal handle it
+    }
+  };
 
   return (
     <>
@@ -75,31 +151,67 @@ export default function CommunityPage() {
           <h1 className="text-5xl font-orbitron font-bold mb-4 text-center neon-glow">THE COMMUNITY POT</h1>
           <p className="text-center text-gray-300 mb-12 text-lg">Your hub for poker discussions, questions, and trip planning</p>
 
-          {/* Filter and Action Bar */}
-          <div className="flex flex-col md:flex-row gap-4 mb-12 p-6 card-style items-center">
-            <div className="flex-grow w-full md:w-auto">
-              <input
-                type="text"
-                placeholder="Search posts by keyword..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="search-bar w-full"
-              />
-            </div>
-            <div className="w-full md:w-auto md:min-w-[200px]">
-              <select
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
-                className="filter-btn w-full"
+          {/* Enhanced Filter and Action Bar */}
+          <div className="mb-8 p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50">
+            {/* Main Filter Row */}
+            <div className="flex flex-col lg:flex-row gap-4 mb-4">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  placeholder="Search posts by title, content, or author..."
+                  value={filters.searchQuery}
+                  onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
+                  className="search-bar w-full"
+                />
+              </div>
+              <button
+                onClick={() => setIsCreateModalOpen(true)}
+                className="btn-primary flex items-center justify-center gap-2 px-6"
               >
-                <option value="">Filter by Category</option>
-                {categories.map(category => <option key={category} value={category}>{category}</option>)}
-              </select>
+                <FaPlus />
+                Create New Post
+              </button>
             </div>
-            <button className="btn-primary w-full md:w-auto flex items-center justify-center gap-2">
-              <FaPlus />
-              Create New Post
-            </button>
+
+            {/* Secondary Filters */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <select
+                value={filters.selectedCategory}
+                onChange={(e) => handleFilterChange('selectedCategory', e.target.value)}
+                className="filter-btn"
+              >
+                <option value="">All Categories</option>
+                {categories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+
+              <select
+                value={filters.selectedAuthor || ''}
+                onChange={(e) => handleFilterChange('selectedAuthor', e.target.value || undefined)}
+                className="filter-btn"
+              >
+                <option value="">All Authors</option>
+                {authors.map(author => (
+                  <option key={author} value={author}>{author}</option>
+                ))}
+              </select>
+
+              <select
+                value={filters.sortBy}
+                onChange={(e) => handleFilterChange('sortBy', e.target.value as FilterType['sortBy'])}
+                className="filter-btn"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="mostLiked">Most Liked</option>
+                <option value="mostReplies">Most Replies</option>
+              </select>
+
+              <div className="text-sm text-gray-400 flex items-center justify-center bg-gray-700/30 rounded-lg px-3 py-2 border border-gray-600/30">
+                {filteredPosts.length} of {posts.length} posts
+              </div>
+            </div>
           </div>
 
           {/* Loading State */}
@@ -147,6 +259,13 @@ export default function CommunityPage() {
               )}
             </div>
           )}
+
+          {/* Create Post Modal */}
+          <CreatePostModal
+            isOpen={isCreateModalOpen}
+            onClose={() => setIsCreateModalOpen(false)}
+            onSubmit={handleCreatePost}
+          />
         </div>
       </main>
     </>

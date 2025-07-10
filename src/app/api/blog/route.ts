@@ -52,7 +52,7 @@ const mockBlogPosts = [
   }
 ];
 
-export async function GET(_request: Request) {
+export async function GET() {
   try {
     // Return mock data with proper structure expected by components
     return NextResponse.json({ data: mockBlogPosts });

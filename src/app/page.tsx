@@ -1,4 +1,3 @@
-import ImageWithFallback from '@/components/ImageWithFallback';
 import UpcomingTournaments from '@/components/homepage/UpcomingTournaments';
 import CommunityPot from '@/components/homepage/CommunityPot';
 import FindNextFelt from '@/components/homepage/FindNextFelt';
@@ -14,7 +13,7 @@ export default function HomePage() {
             Your Personal Poker Concierge
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Don't just find a random trip. Design the perfect one. Tell us what you're looking for, and we'll point you to the right felt.
+            Don&apos;t just find a random trip. Design the perfect one. Tell us what you&apos;re looking for, and we&apos;ll point you to the right felt.
           </p>
           <button className="btn-primary text-lg">
             Find Your Action

@@ -11,12 +11,15 @@ export default function InteractiveImage(props: ImageProps) {
   };
 
   // Remove any onError prop passed from parent (especially from Server Components)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { onError, ...rest } = props;
+  // onError is intentionally removed and not used
 
   return (
     <Image
       {...rest}
       fill
+      alt={props.alt || 'Interactive image'}
       className={props.className ? `${props.className} object-cover` : 'object-cover'}
       onError={handleError}
     />

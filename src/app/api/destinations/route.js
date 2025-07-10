@@ -62,7 +62,7 @@ const mockDestinations = [
   }
 ];
 
-export async function GET(request) {
+export async function GET() {
   try {
     // Return mock data instead of database query
     return NextResponse.json(mockDestinations, { status: 200 });

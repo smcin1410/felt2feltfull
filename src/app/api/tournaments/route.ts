@@ -82,7 +82,7 @@ const mockTournaments = [
   }
 ];
 
-export async function GET(_request: Request) {
+export async function GET() {
   try {
     // Return mock data instead of database query
     return NextResponse.json(mockTournaments);

@@ -31,12 +31,12 @@ async function getPost(slug: string): Promise<Post> {
       throw new Error('Failed to fetch post');
     }
     const posts = await res.json();
-    const post = posts.find((p: any) => p.slug === slug);
+    const post = posts.find((p: { slug: string }) => p.slug === slug);
     if (!post) {
       notFound();
     }
     return post;
-  } catch (error) {
+  } catch {
     // Fallback to mock data if API fails
     const mockPost: Post = {
       _id: '1',
@@ -69,13 +69,13 @@ async function getRecentPosts(): Promise<RecentPost[]> {
       throw new Error('Failed to fetch posts');
     }
     const posts = await res.json();
-    return posts.slice(0, 5).map((post: any) => ({
+    return posts.slice(0, 5).map((post: { _id: string; title: string; slug: string; imageUrl?: string }) => ({
       _id: post._id,
       title: post.title,
       slug: post.slug,
       imageUrl: post.imageUrl || '/placeholder-image-small.jpg'
     }));
-  } catch (error) {
+  } catch {
     // Fallback to mock data if API fails
     return [
       { _id: '2', title: 'The Psychology of Poker Tells', slug: 'poker-tells', imageUrl: '/placeholder-image-small.jpg' },

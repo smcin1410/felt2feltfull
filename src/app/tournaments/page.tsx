@@ -2,38 +2,29 @@
 
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { FaSuitcaseRolling } from 'react-icons/fa';
-import { useItinerary } from '../context/ItineraryContext'; // Import the itinerary hook
-
-// Define the structure of a Tournament object
-interface Tournament {
-  _id: string;
-  name: string;
-  location: string;
-  buyIn: number;
-  date: string;
-  endDate: string;
-  description: string;
-  image: string;
-  prizePool: number;
-  players: number;
-  status: string;
-}
+import { Tournament, TournamentFilters as FilterType } from '@/lib/types';
+import TournamentItem from '@/components/tournaments/TournamentItem';
+import TournamentFilters from '@/components/tournaments/TournamentFilters';
 
 export default function TournamentCalendar() {
-  // Get the addItem function from our global Itinerary Context
-  const { addItem } = useItinerary();
-
-  // State for the full list of tournaments and the filtered list
+  // State for the full list of tournaments
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
-  const [filteredTournaments, setFilteredTournaments] = useState<Tournament[]>([]);
-
-  // State for loading, error, and search functionality
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
 
-  // 1. Fetch all tournaments from the API on component mount
+  // State for filters using the new filter type
+  const [filters, setFilters] = useState<FilterType>({
+    searchQuery: '',
+    selectedLocation: '',
+    selectedCircuit: '',
+    minBuyIn: 0,
+    maxBuyIn: 0,
+    dateRange: { start: '', end: '' },
+    status: '',
+    selectedTags: []
+  });
+
+  // Fetch all tournaments from the API on component mount
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
@@ -43,7 +34,6 @@ export default function TournamentCalendar() {
         }
         const data: Tournament[] = await response.json();
         setTournaments(data);
-        setFilteredTournaments(data); // Initially, the filtered list is the full list
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -58,23 +48,76 @@ export default function TournamentCalendar() {
     fetchTournaments();
   }, []);
 
-  // 2. Filter tournaments whenever the search query changes
-  useEffect(() => {
-    const lowercasedQuery = searchQuery.toLowerCase();
-    const filtered = tournaments.filter(tournament =>
-      tournament.name.toLowerCase().includes(lowercasedQuery) ||
-      tournament.location.toLowerCase().includes(lowercasedQuery) ||
-      tournament.description.toLowerCase().includes(lowercasedQuery)
-    );
-    setFilteredTournaments(filtered);
-  }, [searchQuery, tournaments]);
+  // Enhanced filtering logic using the new filter system
+  const filteredTournaments = tournaments.filter(tournament => {
+    // Search query filter
+    if (filters.searchQuery) {
+      const query = filters.searchQuery.toLowerCase();
+      const matchesSearch =
+        tournament.name.toLowerCase().includes(query) ||
+        tournament.location.toLowerCase().includes(query) ||
+        tournament.description.toLowerCase().includes(query);
+      
+      if (!matchesSearch) return false;
+    }
 
-  // Helper function to format dates
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    // Return a 'Month Day' format, e.g., "Oct 26"
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    // Location filter
+    if (filters.selectedLocation && tournament.location !== filters.selectedLocation) {
+      return false;
+    }
+
+    // Circuit filter
+    if (filters.selectedCircuit && tournament.majorCircuit !== filters.selectedCircuit) {
+      return false;
+    }
+
+    // Buy-in range filter
+    if (filters.minBuyIn > 0 && tournament.buyIn < filters.minBuyIn) {
+      return false;
+    }
+    if (filters.maxBuyIn > 0 && tournament.buyIn > filters.maxBuyIn) {
+      return false;
+    }
+
+    // Date range filter
+    if (filters.dateRange.start) {
+      const tournamentDate = new Date(tournament.date);
+      const startDate = new Date(filters.dateRange.start);
+      if (tournamentDate < startDate) return false;
+    }
+    if (filters.dateRange.end) {
+      const tournamentDate = new Date(tournament.date);
+      const endDate = new Date(filters.dateRange.end);
+      if (tournamentDate > endDate) return false;
+    }
+
+    // Status filter
+    if (filters.status && tournament.status !== filters.status) {
+      return false;
+    }
+
+    // Tags filter
+    if (filters.selectedTags.length > 0) {
+      const tournamentTags = tournament.tags || [];
+      const hasMatchingTag = filters.selectedTags.some(tag =>
+        tournamentTags.includes(tag)
+      );
+      if (!hasMatchingTag) return false;
+    }
+
+    return true;
+  });
+
+  // Get unique values for dropdown filters
+  const locations = Array.from(new Set(tournaments.map(t => t.location))).sort();
+  const circuits = Array.from(new Set(tournaments.map(t => t.majorCircuit).filter(Boolean) as string[])).sort();
+  const allTags = Array.from(new Set(tournaments.flatMap(t => t.tags || []))).sort();
+
+  // Handle filter changes
+  const handleFiltersChange = (newFilters: FilterType) => {
+    setFilters(newFilters);
   };
+
 
   return (
     <>
@@ -87,19 +130,14 @@ export default function TournamentCalendar() {
           <h1 className="text-5xl font-bold mb-4 text-center font-orbitron neon-glow">Tournament Calendar</h1>
           <p className="text-center text-text-secondary mb-12 text-lg">Find your next big tournament</p>
 
-          {/* Search and Filter Controls */}
-          <div className="flex flex-col md:flex-row gap-4 mb-12">
-            <input
-              type="text"
-              placeholder="Search by tournament name, location, or description..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-bar flex-grow"
-            />
-            <button className="filter-btn">
-              Filters
-            </button>
-          </div>
+          {/* Enhanced Filter Section */}
+          <TournamentFilters
+            filters={filters}
+            onFiltersChange={handleFiltersChange}
+            locations={locations}
+            circuits={circuits}
+            tags={allTags}
+          />
 
           {/* Loading State */}
           {loading && (
@@ -118,50 +156,65 @@ export default function TournamentCalendar() {
             </div>
           )}
 
+          {/* Results Summary */}
+          {!loading && !error && (
+            <div className="mb-6 flex items-center justify-between">
+              <p className="text-gray-300">
+                Showing <span className="text-cyan-400 font-semibold">{filteredTournaments.length}</span> of{' '}
+                <span className="text-cyan-400 font-semibold">{tournaments.length}</span> tournaments
+              </p>
+              {filteredTournaments.length !== tournaments.length && (
+                <button
+                  onClick={() => handleFiltersChange({
+                    searchQuery: '',
+                    selectedLocation: '',
+                    selectedCircuit: '',
+                    minBuyIn: 0,
+                    maxBuyIn: 0,
+                    dateRange: { start: '', end: '' },
+                    status: '',
+                    selectedTags: []
+                  })}
+                  className="text-cyan-400 hover:text-cyan-300 text-sm underline"
+                >
+                  Clear all filters
+                </button>
+              )}
+            </div>
+          )}
+
           {/* Tournament List */}
           {!loading && !error && (
             <div className="space-y-6">
               {filteredTournaments.length > 0 ? (
                 filteredTournaments.map(tournament => (
-                  <div key={tournament._id} className="card-style flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="flex items-center gap-6 text-center md:text-left">
-                      <div className="bg-gradient-to-br from-cyan-400 to-pink-500 text-black font-bold p-4 rounded-xl flex flex-col items-center justify-center w-24 h-24 shadow-lg">
-                         <span className="text-sm">{formatDate(tournament.date).split(' ')[0]}</span>
-                         <span className="text-2xl">{formatDate(tournament.date).split(' ')[1]}</span>
-                      </div>
-                      <div className="flex-1">
-                        <h2 className="text-2xl font-bold mb-2 font-orbitron neon-glow">{tournament.name}</h2>
-                        <p className="text-gray-300 text-lg mb-2">{tournament.location}</p>
-                        <p className="text-gray-400 mb-2">{tournament.description}</p>
-                        <div className="flex flex-wrap gap-4 text-sm">
-                          <span className="text-cyan-400">Buy-in: ${tournament.buyIn.toLocaleString()}</span>
-                          <span className="text-pink-400">Prize Pool: ${tournament.prizePool.toLocaleString()}</span>
-                          <span className="text-green-400">Players: {tournament.players}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4 mt-4 md:mt-0">
-                      <button className="btn-secondary">
-                        View Details
-                      </button>
-                      <button
-                        onClick={() => addItem({
-                          _id: tournament._id,
-                          name: tournament.name,
-                          type: 'Tournament'
-                        })}
-                        className="btn-primary flex items-center gap-2"
-                      >
-                        <FaSuitcaseRolling />
-                        Add to Itinerary
-                      </button>
-                    </div>
-                  </div>
+                  <TournamentItem
+                    key={tournament._id}
+                    tournament={tournament}
+                    layout="list"
+                    showAddButton={true}
+                  />
                 ))
               ) : (
                 <div className="text-center py-20">
                   <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 p-12">
-                    <p className="text-text-secondary text-xl">No tournaments match your search.</p>
+                    <p className="text-text-secondary text-xl mb-4">No tournaments match your criteria.</p>
+                    <p className="text-gray-400 mb-6">Try adjusting your filters or search terms.</p>
+                    <button
+                      onClick={() => handleFiltersChange({
+                        searchQuery: '',
+                        selectedLocation: '',
+                        selectedCircuit: '',
+                        minBuyIn: 0,
+                        maxBuyIn: 0,
+                        dateRange: { start: '', end: '' },
+                        status: '',
+                        selectedTags: []
+                      })}
+                      className="btn-primary"
+                    >
+                      Clear All Filters
+                    </button>
                   </div>
                 </div>
               )}
