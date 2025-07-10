@@ -24,7 +24,13 @@ const authOptions = {
         }
 
         try {
-          await dbConnect();
+          const connection = await dbConnect();
+          
+          // If no database connection available, return null
+          if (!connection) {
+            console.warn('Database connection not available during authentication');
+            return null;
+          }
           
           const user = await User.findOne({
             email: credentials.email.toLowerCase()
@@ -70,7 +76,13 @@ const authOptions = {
       
       if (account?.provider === 'google' && user) {
         try {
-          await dbConnect();
+          const connection = await dbConnect();
+          
+          // If no database connection available, skip database operations
+          if (!connection) {
+            console.warn('Database connection not available during JWT callback');
+            return token;
+          }
           
           let dbUser = await User.findOne({ email: user.email });
           
@@ -115,6 +127,12 @@ const authOptions = {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Pusher is configured
+    if (!pusherServer) {
+      console.warn('Pusher server not configured - environment variables missing');
+      return NextResponse.json({ error: 'Pusher not configured' }, { status: 503 });
+    }
+
     const session = await getServerSession(authOptions);
     
     if (!session?.user?.id) {
@@ -134,7 +152,14 @@ export async function POST(request: NextRequest) {
     const itineraryId = channelName.replace('itinerary-', '');
     
     // Verify user has access to this itinerary
-    await dbConnect();
+    const connection = await dbConnect();
+    
+    // If no database connection available, skip database verification
+    if (!connection) {
+      console.warn('Database connection not available during Pusher auth');
+      return NextResponse.json({ error: 'Database not available' }, { status: 503 });
+    }
+    
     const itinerary = await Itinerary.findById(itineraryId);
     
     if (!itinerary) {
