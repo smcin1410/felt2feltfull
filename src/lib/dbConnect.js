@@ -11,18 +11,6 @@ import './../models/Itinerary';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  // During build time, we might not have access to environment variables
-  // Only throw error if we're not in build mode
-  if (process.env.NODE_ENV !== 'production' || process.env.VERCEL_ENV) {
-    console.warn('MONGODB_URI not found. Database operations will be disabled.');
-    return null;
-  }
-  throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
-  );
-}
-
 let cached = global.mongoose;
 
 if (!cached) {
@@ -32,6 +20,7 @@ if (!cached) {
 async function dbConnect() {
   // If MONGODB_URI is not available, return null
   if (!MONGODB_URI) {
+    console.warn('MONGODB_URI not found. Database operations will be disabled.');
     return null;
   }
 
