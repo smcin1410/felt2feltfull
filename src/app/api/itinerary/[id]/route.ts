@@ -49,7 +49,7 @@ async function checkItineraryAccess(itineraryId: string, userId: string, require
 // GET - Fetch specific itinerary
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession();
@@ -62,6 +62,7 @@ export async function GET(
 
     await dbConnect();
 
+    const params = await context.params;
     const accessCheck = await checkItineraryAccess(params.id, session.user.id);
     if (!accessCheck.hasAccess) {
       return NextResponse.json(
@@ -91,7 +92,7 @@ export async function GET(
 // PUT - Update itinerary
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession();
@@ -107,6 +108,7 @@ export async function PUT(
 
     await dbConnect();
 
+    const params = await context.params;
     const accessCheck = await checkItineraryAccess(params.id, session.user.id, 'editor');
     if (!accessCheck.hasAccess) {
       return NextResponse.json(
@@ -151,7 +153,7 @@ export async function PUT(
 // DELETE - Delete itinerary
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession();
@@ -164,6 +166,7 @@ export async function DELETE(
 
     await dbConnect();
 
+    const params = await context.params;
     const accessCheck = await checkItineraryAccess(params.id, session.user.id, 'owner');
     if (!accessCheck.hasAccess) {
       return NextResponse.json(
