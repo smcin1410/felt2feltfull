@@ -93,15 +93,15 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
   const recentPosts = await getRecentPosts();
 
   return (
-    <main className="min-h-screen bg-[#0D0D0D] text-white">
+    <main className="min-h-screen bg-[#121212] text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        <div className="blog-container">
           
           {/* Main Blog Post Content (Left Column) */}
-          <article className="lg:col-span-2">
+          <article className="main-column">
             <div className="mb-6">
-              <h1 className="text-4xl font-orbitron font-bold neon-glow mb-2">{post.title}</h1>
-              <p className="text-gray-400">
+              <h1 className="text-4xl font-poppins font-bold neon-glow mb-2">{post.title}</h1>
+              <p className="text-gray-400 font-roboto">
                 By {post.author} on {new Date(post.publishedDate).toLocaleDateString()}
               </p>
             </div>
@@ -116,16 +116,16 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
             </div>
             {/* Use dangerouslySetInnerHTML to render HTML from your CMS/API */}
             <div
-              className="prose prose-invert max-w-none prose-p:text-gray-300 prose-h3:text-cyan-400"
+              className="prose prose-invert max-w-none prose-p:text-gray-300 prose-h3:text-cyan-400 font-roboto"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </article>
           
           {/* All Intel Sidebar (Right Column) */}
-          <aside>
+          <aside className="sidebar-column">
             <div className="card-style p-6 sticky top-24">
-              <h2 className="text-2xl font-orbitron font-bold mb-4 neon-glow-pink border-b-2 border-pink-500/30 pb-2">ALL INTEL</h2>
-              <ul className="space-y-4">
+              <h2 className="sidebar-title text-2xl font-poppins font-bold mb-4 neon-glow-pink border-b-2 border-pink-500/30 pb-2">ALL INTEL</h2>
+              <ul className="sidebar-post-list space-y-4">
                 {recentPosts.map(recentPost => (
                   <li key={recentPost._id}>
                     <Link href={`/blog/${recentPost.slug}`} className="flex items-center gap-4 group">
@@ -138,7 +138,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
                           className="rounded-md"
                         />
                       </div>
-                      <span className="font-semibold group-hover:text-pink-500 transition-colors duration-200">
+                      <span className="font-semibold group-hover:text-pink-500 transition-colors duration-200 font-roboto">
                         {recentPost.title}
                       </span>
                     </Link>

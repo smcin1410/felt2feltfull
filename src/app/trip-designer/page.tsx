@@ -176,24 +176,22 @@ export default function TripDesignerPage() {
         <title>Interactive Trip Planner - Felt2Felt</title>
         <meta name="description" content="Design your perfect poker trip." />
       </Head>
-      <main className="min-h-screen bg-[#0D0D0D]">
-        <div className="container mx-auto px-4 py-8 md:py-12">
+      <main className="trip-designer-page">
+        <div className="trip-designer-container">
           {/* Header with collaboration controls */}
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
-            <div className="text-center lg:text-left mb-6 lg:mb-0">
-              <h1 className="text-5xl font-vegas font-bold mb-4 neon-glow">
+          <div className="trip-designer-header">
+            <div className="trip-designer-title-section">
+              <h1 className="trip-designer-title">
                 {currentItinerary?.name || 'INTERACTIVE TRIP PLANNER'}
               </h1>
-              <p className="text-gray-300 text-lg">Build your custom poker trip in a few easy steps</p>
+              <p className="trip-designer-subtitle">Build your custom poker trip in a few easy steps</p>
             </div>
             
             {/* Collaboration Controls */}
-            <div className="flex items-center space-x-4">
+            <div className="trip-designer-controls">
               {/* Connection Status */}
-              <div className={`flex items-center px-3 py-2 rounded-lg text-sm ${
-                isConnected
-                  ? 'bg-green-900/20 border border-green-500 text-green-400'
-                  : 'bg-red-900/20 border border-red-500 text-red-400'
+              <div className={`trip-designer-status ${
+                isConnected ? 'trip-designer-status-connected' : 'trip-designer-status-offline'
               }`}>
                 {isConnected ? (
                   <>
@@ -210,7 +208,7 @@ export default function TripDesignerPage() {
 
               <button
                 onClick={() => setShowCollaborators(!showCollaborators)}
-                className="flex items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                className="trip-designer-collaborators-btn"
               >
                 <Users className="w-5 h-5 mr-2" />
                 Collaborators ({(currentItinerary?.collaborators?.length || 0) + 1})
@@ -219,7 +217,7 @@ export default function TripDesignerPage() {
               {isOwner && (
                 <button
                   onClick={() => setShowInviteModal(true)}
-                  className="flex items-center px-4 py-2 btn-primary rounded-lg"
+                  className="trip-designer-invite-btn"
                 >
                   <UserPlus className="w-5 h-5 mr-2" />
                   Invite
@@ -241,40 +239,36 @@ export default function TripDesignerPage() {
           )}
 
           {/* Step Navigation */}
-          <div className="flex justify-center mb-12">
-            <div className="flex items-center space-x-4">
+          <div className="trip-designer-steps">
+            <div className="trip-designer-steps-container">
               {[
                 { key: 'destinations', label: 'Destinations' },
                 { key: 'tournaments', label: 'Tournaments' },
                 { key: 'summary', label: 'Summary' }
               ].map((step, index) => (
-                <div key={step.key} className="flex items-center">
+                <div key={step.key} className="trip-designer-step-item">
                   <button
                     onClick={() => isStepAccessible(step.key) && setCurrentStep(step.key as 'destinations' | 'tournaments' | 'summary')}
-                    className={`
-                      flex items-center justify-center w-12 h-12 rounded-full text-xl font-bold transition-all
-                      ${currentStep === step.key
-                        ? 'bg-gradient-to-r from-pink-500 to-pink-600 text-black'
-                        : isStepCompleted(step.key)
-                        ? 'bg-green-600 text-white'
-                        : isStepAccessible(step.key)
-                        ? 'bg-gray-600 text-white hover:bg-gray-500 cursor-pointer'
-                        : 'bg-gray-800 text-gray-500 cursor-not-allowed'
-                      }
-                    `}
+                    className={`trip-designer-step-btn ${
+                      currentStep === step.key ? 'trip-designer-step-active' :
+                      isStepCompleted(step.key) ? 'trip-designer-step-completed' :
+                      isStepAccessible(step.key) ? 'trip-designer-step-accessible' :
+                      'trip-designer-step-disabled'
+                    }`}
                     disabled={!isStepAccessible(step.key)}
                   >
                     {getStepNumber(step.key)}
                   </button>
-                  <span className={`ml-2 font-medium ${
-                    currentStep === step.key ? 'text-pink-400' :
-                    isStepAccessible(step.key) ? 'text-gray-300' : 'text-gray-500'
+                  <span className={`trip-designer-step-label ${
+                    currentStep === step.key ? 'trip-designer-step-label-active' :
+                    isStepAccessible(step.key) ? 'trip-designer-step-label-accessible' :
+                    'trip-designer-step-label-disabled'
                   }`}>
                     {step.label}
                   </span>
                   {index < 2 && (
-                    <div className={`w-8 h-0.5 mx-4 ${
-                      isStepCompleted(step.key) ? 'bg-green-500' : 'bg-gray-600'
+                    <div className={`trip-designer-step-connector ${
+                      isStepCompleted(step.key) ? 'trip-designer-step-connector-completed' : 'trip-designer-step-connector-default'
                     }`} />
                   )}
                 </div>
@@ -282,16 +276,17 @@ export default function TripDesignerPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Left Column: Current Step Content */}
-            <div className="lg:col-span-2">
+          {/* Designer Grid - Two Column Layout */}
+          <div className="designer-grid">
+            {/* Left Column: Designer Controls */}
+            <div className="designer-controls">
               {currentStep === 'destinations' && (
-                <div className="card-style p-8">
-                  <h2 className="text-3xl font-vegas font-bold mb-6 flex items-center text-white">
-                    <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-black rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">1</span>
+                <div className="card-style">
+                  <h2 className="trip-designer-step-title">
+                    <span className="trip-designer-step-number">1</span>
                     Select Destinations
                   </h2>
-                  <p className="text-gray-300 mb-6">
+                  <p className="trip-designer-step-description">
                     Choose the poker destinations you want to visit. You can select multiple cities to create a multi-stop trip.
                   </p>
                   <DestinationSelector
@@ -299,10 +294,10 @@ export default function TripDesignerPage() {
                     selectedDestinations={selectedDestinations}
                   />
                   {selectedDestinations.length > 0 && (
-                    <div className="mt-6 text-center">
+                    <div className="trip-designer-step-actions">
                       <button
                         onClick={() => setCurrentStep('tournaments')}
-                        className="btn-primary px-8 py-3"
+                        className="trip-designer-continue-btn"
                       >
                         Continue to Tournaments →
                       </button>
@@ -312,12 +307,12 @@ export default function TripDesignerPage() {
               )}
 
               {currentStep === 'tournaments' && (
-                <div className="card-style p-8">
-                  <h2 className="text-3xl font-vegas font-bold mb-6 flex items-center text-white">
-                    <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-black rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">2</span>
+                <div className="card-style">
+                  <h2 className="trip-designer-step-title">
+                    <span className="trip-designer-step-number">2</span>
                     Find Tournaments
                   </h2>
-                  <p className="text-gray-300 mb-6">
+                  <p className="trip-designer-step-description">
                     Browse upcoming tournaments in your selected destinations. Add tournaments to your trip itinerary.
                   </p>
                   <TournamentSelector
@@ -325,16 +320,16 @@ export default function TripDesignerPage() {
                     selectedTournaments={selectedTournaments}
                     selectedDestinations={selectedDestinations}
                   />
-                  <div className="mt-6 flex justify-between">
+                  <div className="trip-designer-step-navigation">
                     <button
                       onClick={() => setCurrentStep('destinations')}
-                      className="bg-gray-600 hover:bg-gray-500 text-white py-2 px-6 rounded-lg font-medium transition-colors"
+                      className="trip-designer-back-btn"
                     >
                       ← Back to Destinations
                     </button>
                     <button
                       onClick={() => setCurrentStep('summary')}
-                      className="btn-primary px-8 py-3"
+                      className="trip-designer-continue-btn"
                     >
                       View Trip Summary →
                     </button>
@@ -343,12 +338,12 @@ export default function TripDesignerPage() {
               )}
 
               {currentStep === 'summary' && (
-                <div className="card-style p-8">
-                  <h2 className="text-3xl font-vegas font-bold mb-6 flex items-center text-white">
-                    <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-black rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">3</span>
+                <div className="card-style">
+                  <h2 className="trip-designer-step-title">
+                    <span className="trip-designer-step-number">3</span>
                     Trip Summary
                   </h2>
-                  <p className="text-gray-300 mb-6">
+                  <p className="trip-designer-step-description">
                     Review your trip details, add notes, and export your itinerary.
                   </p>
                   <TripSummary
@@ -357,10 +352,10 @@ export default function TripDesignerPage() {
                     onRemoveDestination={handleRemoveDestination}
                     onRemoveTournament={handleRemoveTournament}
                   />
-                  <div className="mt-6 text-center">
+                  <div className="trip-designer-step-actions">
                     <button
                       onClick={() => setCurrentStep('tournaments')}
-                      className="bg-gray-600 hover:bg-gray-500 text-white py-2 px-6 rounded-lg font-medium transition-colors"
+                      className="trip-designer-back-btn"
                     >
                       ← Back to Tournaments
                     </button>
@@ -369,17 +364,28 @@ export default function TripDesignerPage() {
               )}
             </div>
 
-            {/* Right Column: Sticky Trip Summary */}
-            <aside>
-              <div className="sticky top-24">
-                <TripSummary
-                  selectedDestinations={selectedDestinations}
-                  selectedTournaments={selectedTournaments}
-                  onRemoveDestination={handleRemoveDestination}
-                  onRemoveTournament={handleRemoveTournament}
-                />
+            {/* Right Column: Summary and Map */}
+            <div className="summary-map-column">
+              <div className="trip-designer-sidebar">
+                {/* Trip Map Placeholder */}
+                <div className="card-style">
+                  <h3 className="trip-designer-map-title">Trip Map</h3>
+                  <div className="trip-designer-map-container">
+                    <p className="trip-designer-map-placeholder">Interactive map will be displayed here</p>
+                  </div>
+                </div>
+
+                {/* Itinerary Summary */}
+                <div className="itinerary-summary">
+                  <TripSummary
+                    selectedDestinations={selectedDestinations}
+                    selectedTournaments={selectedTournaments}
+                    onRemoveDestination={handleRemoveDestination}
+                    onRemoveTournament={handleRemoveTournament}
+                  />
+                </div>
               </div>
-            </aside>
+            </div>
           </div>
         </div>
 

@@ -38,35 +38,46 @@ const LatestIntel = () => {
 
   return (
     <section>
-      <h2 className="text-3xl font-bold text-center mb-8 font-orbitron neon-glow">
+      <h2 className="blog-section-title">
         Latest Intel from the Blog
       </h2>
-      <div className="bg-gray-800 rounded-lg p-1 border border-gray-700 max-w-4xl mx-auto">
-        {loading && <div className="min-h-[200px] flex items-center justify-center"><p>Loading latest intel...</p></div>}
-        {error && <div className="min-h-[200px] flex items-center justify-center"><p className="text-red-400">Error: {error}</p></div>}
+      <div className="blog-featured-post">
+        {loading && (
+          <div className="blog-loading">
+            <p>Loading latest intel...</p>
+          </div>
+        )}
+        {error && (
+          <div className="blog-error">
+            <p>Error: {error}</p>
+          </div>
+        )}
         {post && (
-          <Link href={`/blog/${post.slug || post._id}`} className="block hover:opacity-90 transition-opacity">
-            <div className="grid md:grid-cols-2 gap-0 items-center">
-                <div className="relative h-80 md:h-full rounded-l-lg overflow-hidden">
-                    <Image 
-                        // **FIX 2: Use post.image and a valid fallback**
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        className="object-cover"
-                    />
-                </div>
-                <div className="p-8">
-                <h3 className="text-2xl font-bold">{post.title}</h3>
-                <p className="mt-2 text-gray-300">{post.excerpt}</p>
-                <span className="text-cyan-400 hover:text-cyan-300 mt-4 inline-block">
-                    Read More...
+          <Link href={`/blog/${post.slug || post._id}`} className="blog-post-link">
+            <div className="blog-post-card">
+              <div className="blog-post-image">
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="blog-post-content">
+                <h3 className="blog-post-title">{post.title}</h3>
+                <p className="blog-post-excerpt">{post.excerpt}</p>
+                <span className="blog-read-more">
+                  Read More →
                 </span>
-                </div>
+              </div>
             </div>
           </Link>
         )}
-        {!loading && !post && <div className="min-h-[200px] flex items-center justify-center"><p>No blog posts found.</p></div>}
+        {!loading && !post && (
+          <div className="blog-no-posts">
+            <p>No blog posts found.</p>
+          </div>
+        )}
       </div>
     </section>
   );

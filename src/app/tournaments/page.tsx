@@ -125,43 +125,47 @@ export default function TournamentCalendar() {
         <title>Tournament Calendar - Felt2Felt</title>
         <meta name="description" content="Search for upcoming poker tournaments." />
       </Head>
-      <main className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-8 md:py-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-center font-vegas neon-glow">Tournament Calendar</h1>
-          <p className="text-center text-text-secondary mb-8 md:mb-12 text-base md:text-lg">Find your next big tournament</p>
+      <main className="tournaments-page">
+        <div className="tournaments-page-container">
+          <div className="tournaments-header">
+            <h1 className="tournaments-page-title">Tournament Calendar</h1>
+            <p className="tournaments-page-subtitle">Find your next big tournament</p>
+          </div>
 
           {/* Enhanced Filter Section */}
-          <TournamentFilters
-            filters={filters}
-            onFiltersChange={handleFiltersChange}
-            locations={locations}
-            circuits={circuits}
-            tags={allTags}
-          />
+          <div className="tournaments-filters-section">
+            <TournamentFilters
+              filters={filters}
+              onFiltersChange={handleFiltersChange}
+              locations={locations}
+              circuits={circuits}
+              tags={allTags}
+            />
+          </div>
 
           {/* Loading State */}
           {loading && (
-            <div className="text-center py-20">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-accent-neon mx-auto mb-6"></div>
-              <p className="text-text-secondary text-xl">Loading tournaments...</p>
+            <div className="tournaments-loading">
+              <div className="tournaments-loading-spinner"></div>
+              <p className="tournaments-loading-text">Loading tournaments...</p>
             </div>
           )}
 
           {/* Error State */}
           {error && (
-            <div className="text-center py-20">
-              <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-8 max-w-md mx-auto">
-                <p className="text-red-400 font-semibold text-lg">Error: {error}</p>
+            <div className="tournaments-error">
+              <div className="tournaments-error-card">
+                <p className="tournaments-error-text">Error: {error}</p>
               </div>
             </div>
           )}
 
           {/* Results Summary */}
           {!loading && !error && (
-            <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-2">
-              <p className="text-gray-300 text-sm md:text-base">
-                Showing <span className="text-cyan-400 font-semibold">{filteredTournaments.length}</span> of{' '}
-                <span className="text-cyan-400 font-semibold">{tournaments.length}</span> tournaments
+            <div className="tournaments-results-summary">
+              <p className="tournaments-results-count">
+                Showing <span className="tournaments-count-highlight">{filteredTournaments.length}</span> of{' '}
+                <span className="tournaments-count-highlight">{tournaments.length}</span> tournaments
               </p>
               {filteredTournaments.length !== tournaments.length && (
                 <button
@@ -175,7 +179,7 @@ export default function TournamentCalendar() {
                     status: '',
                     selectedTags: []
                   })}
-                  className="text-cyan-400 hover:text-cyan-300 text-sm underline self-start md:self-auto"
+                  className="tournaments-clear-filters"
                 >
                   Clear all filters
                 </button>
@@ -185,7 +189,7 @@ export default function TournamentCalendar() {
 
           {/* Tournament List */}
           {!loading && !error && (
-            <div className="space-y-4 md:space-y-6">
+            <div className="tournaments-list">
               {filteredTournaments.length > 0 ? (
                 filteredTournaments.map(tournament => (
                   <TournamentItem
@@ -196,29 +200,25 @@ export default function TournamentCalendar() {
                   />
                 ))
               ) : tournaments.length === 0 ? (
-                <div className="text-center py-12 md:py-20">
-                  <div className="max-w-lg mx-auto">
-                    <div className="bg-gradient-to-r from-pink-500/20 to-cyan-400/20 rounded-xl p-6 md:p-12 border border-pink-500/30">
-                      <h3 className="font-vegas text-2xl md:text-3xl text-pink-400 mb-4">🎰 High Roller Events Loading...</h3>
-                      <p className="text-gray-300 text-base md:text-lg mb-4">
-                        We're partnering with the biggest casinos in Vegas to bring you exclusive tournament access.
-                      </p>
-                      <p className="text-cyan-400 font-semibold text-sm md:text-base mb-4">
-                        WSOP • WPT • Aria High Roller • Bellagio Cup
-                      </p>
-                      <div className="bg-black/30 rounded-lg p-4 border border-cyan-400/30">
-                        <p className="text-cyan-400 text-sm">
-                          💎 VIP tournament packages coming soon
-                        </p>
-                      </div>
+                <div className="tournaments-empty-state">
+                  <div className="tournaments-empty-card">
+                    <h3 className="tournaments-empty-title">🎰 High Roller Events Loading...</h3>
+                    <p className="tournaments-empty-text">
+                      We're partnering with the biggest casinos in Vegas to bring you exclusive tournament access.
+                    </p>
+                    <p className="tournaments-empty-circuits">
+                      WSOP • WPT • Aria High Roller • Bellagio Cup
+                    </p>
+                    <div className="tournaments-empty-note">
+                      <p className="tournaments-empty-note-text">💎 VIP tournament packages coming soon</p>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="text-center py-12 md:py-20">
-                  <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 p-6 md:p-12 max-w-md mx-auto">
-                    <p className="text-text-secondary text-lg md:text-xl mb-4">No tournaments match your criteria.</p>
-                    <p className="text-gray-400 mb-6 text-sm md:text-base">Try adjusting your filters or search terms.</p>
+                <div className="tournaments-no-results">
+                  <div className="tournaments-no-results-card">
+                    <p className="tournaments-no-results-title">No tournaments match your criteria.</p>
+                    <p className="tournaments-no-results-text">Try adjusting your filters or search terms.</p>
                     <button
                       onClick={() => handleFiltersChange({
                         searchQuery: '',
@@ -230,7 +230,7 @@ export default function TournamentCalendar() {
                         status: '',
                         selectedTags: []
                       })}
-                      className="btn-primary"
+                      className="tournaments-clear-all-btn"
                     >
                       Clear All Filters
                     </button>

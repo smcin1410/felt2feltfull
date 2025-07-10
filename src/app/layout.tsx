@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-sans bg-[#0D0D0D] text-white min-h-screen">
+      <body className="font-roboto bg-[#121212] text-white min-h-screen">
         <Providers>
           <Navbar />
           <main className="pt-16">
