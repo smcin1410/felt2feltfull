@@ -1,36 +1,143 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import Head from 'next/head';
+import { UserPlus, Users, Wifi, WifiOff } from 'lucide-react';
 import { Destination, Tournament } from '@/lib/types';
 import DestinationSelector from '@/components/trip-designer/DestinationSelector';
 import TournamentSelector from '@/components/trip-designer/TournamentSelector';
 import TripSummary from '@/components/trip-designer/TripSummary';
+import InviteModal from '@/components/trip-designer/InviteModal';
+import CollaboratorList from '@/components/trip-designer/CollaboratorList';
+import { useCollaboration } from '@/hooks/useCollaboration';
+import { PUSHER_EVENTS } from '@/lib/pusher';
 
 export default function TripDesignerPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
   // State for selected items
   const [selectedDestinations, setSelectedDestinations] = useState<Destination[]>([]);
   const [selectedTournaments, setSelectedTournaments] = useState<Tournament[]>([]);
   const [currentStep, setCurrentStep] = useState<'destinations' | 'tournaments' | 'summary'>('destinations');
+  
+  // Collaboration state
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [showCollaborators, setShowCollaborators] = useState(false);
+  const [currentItinerary, setCurrentItinerary] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Real-time collaboration
+  const { activeUsers, isConnected, broadcastEvent } = useCollaboration({
+    itineraryId: currentItinerary?._id || '',
+    onDestinationAdded: (destination) => {
+      setSelectedDestinations(prev => [...prev, destination]);
+    },
+    onDestinationRemoved: (destinationId) => {
+      setSelectedDestinations(prev => prev.filter(dest => dest._id !== destinationId));
+    },
+    onTournamentAdded: (tournament) => {
+      setSelectedTournaments(prev => [...prev, tournament]);
+    },
+    onTournamentRemoved: (tournamentId) => {
+      setSelectedTournaments(prev => prev.filter(tournament => tournament._id !== tournamentId));
+    },
+    onCollaboratorAdded: (collaborator) => {
+      setCurrentItinerary((prev: any) => ({
+        ...prev,
+        collaborators: [...(prev?.collaborators || []), collaborator]
+      }));
+    },
+    onCollaboratorRemoved: (collaboratorId) => {
+      setCurrentItinerary((prev: any) => ({
+        ...prev,
+        collaborators: (prev?.collaborators || []).filter((c: any) => c.user._id !== collaboratorId)
+      }));
+    },
+  });
+
+  // Redirect to signin if not authenticated
+  useEffect(() => {
+    if (status === 'loading') return;
+    
+    if (!session) {
+      router.push('/auth/signin');
+      return;
+    }
+    
+    // Load or create itinerary
+    loadItinerary();
+  }, [session, status, router]);
+
+  const loadItinerary = async () => {
+    try {
+      // For now, create a default itinerary if none exists
+      // In a real app, you might want to load from URL params or user's saved itineraries
+      const defaultItinerary = {
+        _id: 'temp-id',
+        name: 'My Poker Trip',
+        owner: {
+          _id: session?.user?.id,
+          name: session?.user?.name,
+          email: session?.user?.email
+        },
+        collaborators: [],
+        items: []
+      };
+      
+      setCurrentItinerary(defaultItinerary);
+    } catch (error) {
+      console.error('Failed to load itinerary:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (status === 'loading' || isLoading) {
+    return (
+      <div className="min-h-screen bg-[#0D0D0D] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-neon mx-auto mb-4"></div>
+          <p className="text-gray-300">Loading trip designer...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return null; // Will redirect to signin
+  }
+
+  const isOwner = currentItinerary?.owner?._id === session.user.id;
 
   // Handle destination selection
   const handleDestinationSelect = (destination: Destination) => {
     setSelectedDestinations(prev => [...prev, destination]);
+    // Broadcast to other collaborators
+    broadcastEvent(PUSHER_EVENTS.DESTINATION_ADDED, { destination });
   };
 
   // Handle tournament selection
   const handleTournamentSelect = (tournament: Tournament) => {
     setSelectedTournaments(prev => [...prev, tournament]);
+    // Broadcast to other collaborators
+    broadcastEvent(PUSHER_EVENTS.TOURNAMENT_ADDED, { tournament });
   };
 
   // Handle removing destinations
   const handleRemoveDestination = (destinationId: string) => {
     setSelectedDestinations(prev => prev.filter(dest => dest._id !== destinationId));
+    // Broadcast to other collaborators
+    broadcastEvent(PUSHER_EVENTS.DESTINATION_REMOVED, { destinationId });
   };
 
   // Handle removing tournaments
   const handleRemoveTournament = (tournamentId: string) => {
     setSelectedTournaments(prev => prev.filter(tournament => tournament._id !== tournamentId));
+    // Broadcast to other collaborators
+    broadcastEvent(PUSHER_EVENTS.TOURNAMENT_REMOVED, { tournamentId });
   };
 
   // Get step number for display
@@ -71,8 +178,67 @@ export default function TripDesignerPage() {
       </Head>
       <main className="min-h-screen bg-[#0D0D0D]">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-5xl font-orbitron font-bold mb-4 text-center neon-glow">INTERACTIVE TRIP PLANNER</h1>
-          <p className="text-center text-gray-300 mb-12 text-lg">Build your custom poker itinerary in a few easy steps</p>
+          {/* Header with collaboration controls */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
+            <div className="text-center lg:text-left mb-6 lg:mb-0">
+              <h1 className="text-5xl font-orbitron font-bold mb-4 neon-glow">
+                {currentItinerary?.name || 'INTERACTIVE TRIP PLANNER'}
+              </h1>
+              <p className="text-gray-300 text-lg">Build your custom poker itinerary in a few easy steps</p>
+            </div>
+            
+            {/* Collaboration Controls */}
+            <div className="flex items-center space-x-4">
+              {/* Connection Status */}
+              <div className={`flex items-center px-3 py-2 rounded-lg text-sm ${
+                isConnected
+                  ? 'bg-green-900/20 border border-green-500 text-green-400'
+                  : 'bg-red-900/20 border border-red-500 text-red-400'
+              }`}>
+                {isConnected ? (
+                  <>
+                    <Wifi className="w-4 h-4 mr-2" />
+                    Live ({activeUsers.length})
+                  </>
+                ) : (
+                  <>
+                    <WifiOff className="w-4 h-4 mr-2" />
+                    Offline
+                  </>
+                )}
+              </div>
+
+              <button
+                onClick={() => setShowCollaborators(!showCollaborators)}
+                className="flex items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+              >
+                <Users className="w-5 h-5 mr-2" />
+                Collaborators ({(currentItinerary?.collaborators?.length || 0) + 1})
+              </button>
+              
+              {isOwner && (
+                <button
+                  onClick={() => setShowInviteModal(true)}
+                  className="flex items-center px-4 py-2 btn-primary rounded-lg"
+                >
+                  <UserPlus className="w-5 h-5 mr-2" />
+                  Invite
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Collaborators Panel */}
+          {showCollaborators && currentItinerary && (
+            <div className="mb-8">
+              <CollaboratorList
+                owner={currentItinerary.owner}
+                collaborators={currentItinerary.collaborators || []}
+                currentUserId={session.user.id}
+                isOwner={isOwner}
+              />
+            </div>
+          )}
 
           {/* Step Navigation */}
           <div className="flex justify-center mb-12">
@@ -216,6 +382,14 @@ export default function TripDesignerPage() {
             </aside>
           </div>
         </div>
+
+        {/* Invite Modal */}
+        <InviteModal
+          isOpen={showInviteModal}
+          itineraryId={currentItinerary?._id || ''}
+          itineraryName={currentItinerary?.name || 'Trip'}
+          onClose={() => setShowInviteModal(false)}
+        />
       </main>
     </>
   );

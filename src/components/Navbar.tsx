@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useItineraryCount } from '@/store/itineraryStore';
 import { FaBars, FaTimes, FaSuitcaseRolling } from 'react-icons/fa';
@@ -8,6 +8,8 @@ import { FaBars, FaTimes, FaSuitcaseRolling } from 'react-icons/fa';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const itemCount = useItineraryCount();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -47,7 +49,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center">
             <button className="relative p-2 text-white hover:text-pink-500 transition-colors duration-200">
               <FaSuitcaseRolling size={20} />
-              {itemCount > 0 && (
+              {mounted && itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-pink-500 text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                   {itemCount}
                 </span>
@@ -60,7 +62,7 @@ const Navbar = () => {
             {/* Mobile Itinerary Icon */}
             <button className="relative p-2 text-white hover:text-pink-500 transition-colors duration-200">
               <FaSuitcaseRolling size={18} />
-              {itemCount > 0 && (
+              {mounted && itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-pink-500 text-black text-xs rounded-full h-4 w-4 flex items-center justify-center font-bold text-[10px]">
                   {itemCount}
                 </span>

@@ -9,7 +9,14 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        select: false // Prevents password from being returned in queries
+    },
+    name: {
+        type: String
+    },
+    authProvider: {
+        type: String,
+        default: 'credentials' // e.g., 'google', 'credentials'
     },
     isVerified: {
         type: Boolean,
@@ -31,7 +38,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: 'New Hand'
     }
-});
+}, { timestamps: true });
 
 // Before saving, check if it's the first user to make them an admin
 UserSchema.pre('save', async function(next) {
@@ -44,4 +51,4 @@ UserSchema.pre('save', async function(next) {
     next();
 });
 
-export default mongoose.models.user || mongoose.model('user', UserSchema);
+export default mongoose.models.User || mongoose.model('User', UserSchema);
