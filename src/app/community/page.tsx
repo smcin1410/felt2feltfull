@@ -147,12 +147,12 @@ export default function CommunityPage() {
         <meta name="description" content="Join the Felt2Felt community conversation." />
       </Head>
       <main className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-12">
-          <h1 className="text-5xl font-orbitron font-bold mb-4 text-center neon-glow">THE COMMUNITY POT</h1>
-          <p className="text-center text-gray-300 mb-12 text-lg">Your hub for poker discussions, questions, and trip planning</p>
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-vegas font-bold mb-4 text-center neon-glow">THE COMMUNITY POT</h1>
+          <p className="text-center text-gray-300 mb-8 md:mb-12 text-base md:text-lg">Your hub for poker discussions, questions, and trip planning</p>
 
           {/* Enhanced Filter and Action Bar */}
-          <div className="mb-8 p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50">
+          <div className="mb-6 md:mb-8 p-4 md:p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50">
             {/* Main Filter Row */}
             <div className="flex flex-col lg:flex-row gap-4 mb-4">
               <div className="relative flex-1">
@@ -166,15 +166,16 @@ export default function CommunityPage() {
               </div>
               <button
                 onClick={() => setIsCreateModalOpen(true)}
-                className="btn-primary flex items-center justify-center gap-2 px-6"
+                className="btn-primary flex items-center justify-center gap-2 px-4 md:px-6 text-sm md:text-base"
               >
                 <FaPlus />
-                Create New Post
+                <span className="hidden sm:inline">Create New Post</span>
+                <span className="sm:hidden">New Post</span>
               </button>
             </div>
 
             {/* Secondary Filters */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
               <select
                 value={filters.selectedCategory}
                 onChange={(e) => handleFilterChange('selectedCategory', e.target.value)}
@@ -208,7 +209,7 @@ export default function CommunityPage() {
                 <option value="mostReplies">Most Replies</option>
               </select>
 
-              <div className="text-sm text-gray-400 flex items-center justify-center bg-gray-700/30 rounded-lg px-3 py-2 border border-gray-600/30">
+              <div className="text-xs md:text-sm text-gray-400 flex items-center justify-center bg-gray-700/30 rounded-lg px-2 md:px-3 py-2 border border-gray-600/30 col-span-2 md:col-span-1">
                 {filteredPosts.length} of {posts.length} posts
               </div>
             </div>
@@ -233,28 +234,72 @@ export default function CommunityPage() {
 
           {/* Posts Display */}
           {!loading && !error && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
               {filteredPosts.length > 0 ? (
                 filteredPosts.map(post => (
-                  <div key={post._id} className="card-style p-8 flex flex-col gap-6 hover:border-cyan-400/50 transition-all duration-300">
+                  <div key={post._id} className="card-style p-4 md:p-6 lg:p-8 flex flex-col gap-4 md:gap-6 hover:border-cyan-400/50 transition-all duration-300">
                     <div>
-                      <p className="font-bold text-cyan-400 text-lg">{post.author}</p>
-                      <h2 className="text-xl font-semibold mt-2 text-white">{post.title}</h2>
-                      <p className="text-sm text-gray-400 mt-1">{new Date(post.createdAt).toLocaleDateString()}</p>
+                      <p className="font-bold text-cyan-400 text-base md:text-lg">{post.author}</p>
+                      <h2 className="text-lg md:text-xl font-semibold mt-2 text-white">{post.title}</h2>
+                      <p className="text-xs md:text-sm text-gray-400 mt-1">{new Date(post.createdAt).toLocaleDateString()}</p>
                     </div>
-                    <p className="text-gray-300 flex-grow leading-relaxed">{post.content.substring(0, 150)}...</p>
-                    <div className="flex justify-between items-center text-sm text-gray-400">
-                      <span className="bg-gray-700/50 text-cyan-400 px-3 py-1 rounded-full border border-gray-600/30">{post.category}</span>
-                      <div className="flex gap-4">
+                    <p className="text-gray-300 flex-grow leading-relaxed text-sm md:text-base">{post.content.substring(0, 150)}...</p>
+                    <div className="flex justify-between items-center text-xs md:text-sm text-gray-400">
+                      <span className="bg-gray-700/50 text-cyan-400 px-2 md:px-3 py-1 rounded-full border border-gray-600/30 text-xs">{post.category}</span>
+                      <div className="flex gap-2 md:gap-4">
                         <span>👍 {post.likes}</span>
                         <span>💬 {post.replies}</span>
                       </div>
                     </div>
                   </div>
                 ))
+              ) : posts.length === 0 ? (
+                <div className="col-span-full text-center py-12 md:py-20">
+                  <div className="max-w-lg mx-auto">
+                    <div className="bg-gradient-to-r from-pink-500/20 to-cyan-400/20 rounded-xl p-6 md:p-12 border border-pink-500/30">
+                      <h3 className="font-vegas text-2xl md:text-3xl text-pink-400 mb-4">🎰 The Conversation Starts Here!</h3>
+                      <p className="text-gray-300 text-base md:text-lg mb-4">
+                        Be the first to share your poker stories, ask questions, or find travel buddies for your next Vegas adventure.
+                      </p>
+                      <div className="space-y-2 mb-4">
+                        <p className="text-cyan-400 font-semibold text-sm md:text-base">
+                          💬 Share your biggest wins & bad beats
+                        </p>
+                        <p className="text-cyan-400 font-semibold text-sm md:text-base">
+                          🤝 Find poker travel companions
+                        </p>
+                        <p className="text-cyan-400 font-semibold text-sm md:text-base">
+                          🎯 Get insider tips from pros
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setIsCreateModalOpen(true)}
+                        className="btn-primary flex items-center justify-center gap-2 mx-auto"
+                      >
+                        <FaPlus />
+                        Start the Conversation
+                      </button>
+                    </div>
+                  </div>
+                </div>
               ) : (
-                <div className="col-span-full text-center py-20">
-                  <p className="text-gray-300 text-xl">No posts match your criteria.</p>
+                <div className="col-span-full text-center py-12 md:py-20">
+                  <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 p-6 md:p-12 max-w-md mx-auto">
+                    <p className="text-gray-300 text-lg md:text-xl mb-4">No posts match your criteria.</p>
+                    <p className="text-gray-400 mb-6 text-sm md:text-base">Try adjusting your filters or search terms.</p>
+                    <button
+                      onClick={() => setFilters({
+                        searchQuery: '',
+                        selectedCategory: '',
+                        selectedAuthor: undefined,
+                        dateRange: undefined,
+                        sortBy: 'newest'
+                      })}
+                      className="btn-primary"
+                    >
+                      Clear All Filters
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

@@ -5,12 +5,13 @@ const config = {
         'background': '#0D0D0D',
         'text-primary': '#E5E7EB',
         'text-secondary': '#9CA3AF',
-        'accent-neon': '#22D3EE',
+        'accent-neon': '#00A2A2',
         'accent-hotpink': '#EC4899',
         'accent-light': '#E5E7EB',
       },
       fontFamily: {
-        'orbitron': ['Orbitron', 'sans-serif'],
+        'vegas': ['Fredoka One', 'cursive'],
+        'retro': ['Righteous', 'cursive'],
         sans: ['Inter', 'sans-serif'],
       },
       animation: {
@@ -19,10 +20,10 @@ const config = {
       keyframes: {
         'pulse-neon': {
           '0%': {
-            textShadow: '0 0 5px #22D3EE, 0 0 10px #22D3EE, 0 0 15px #22D3EE, 0 0 20px #22D3EE',
+            textShadow: '0 0 5px #00A2A2, 0 0 10px #00A2A2, 0 0 15px #00A2A2, 0 0 20px #00A2A2',
           },
           '100%': {
-            textShadow: '0 0 10px #22D3EE, 0 0 20px #22D3EE, 0 0 30px #22D3EE, 0 0 40px #22D3EE, 0 0 50px #22D3EE',
+            textShadow: '0 0 10px #00A2A2, 0 0 20px #00A2A2, 0 0 30px #00A2A2, 0 0 40px #00A2A2, 0 0 50px #00A2A2',
           },
         },
       },

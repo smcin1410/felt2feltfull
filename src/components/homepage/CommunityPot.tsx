@@ -26,7 +26,7 @@ export default function CommunityPot() {
   };
 
   return (
-    <section className="relative w-full h-64 overflow-hidden bg-gray-900 text-white flex flex-col justify-center items-center p-4 rounded-lg shadow-lg">
+    <section className="relative w-full h-48 md:h-64 overflow-hidden bg-gray-900 text-white flex flex-col justify-center items-center p-4 md:p-6 rounded-lg shadow-lg">
       {/* Background Image */}
       <div className="absolute inset-0 z-0 h-full">
         <Image
@@ -41,8 +41,8 @@ export default function CommunityPot() {
 
       {/* Content */}
       <div className="relative z-10 text-center">
-        <h2 className="text-3xl font-bold mb-2 font-orbitron neon-glow">THE COMMUNITY POT</h2>
-        <p className="text-lg mb-4">
+        <h2 className="text-2xl md:text-3xl font-bold mb-2 font-vegas neon-glow">THE COMMUNITY POT</h2>
+        <p className="text-base md:text-lg mb-4 px-2 text-center">
           Share your stories, find travel partners, and get the real scoop from players on the felt.
         </p>
         <button className="btn-primary">

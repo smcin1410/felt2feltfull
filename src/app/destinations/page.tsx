@@ -112,9 +112,9 @@ export default function PokerDestinations() {
         <meta name="description" content="Find the best poker destinations worldwide." />
       </Head>
       <main className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-12">
-          <h1 className="text-5xl font-bold mb-4 text-center font-orbitron neon-glow">Poker Destinations</h1>
-          <p className="text-center text-text-secondary mb-12 text-lg">Discover the world&apos;s premier poker venues</p>
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-center font-vegas neon-glow">Poker Destinations</h1>
+          <p className="text-center text-text-secondary mb-8 md:mb-12 text-base md:text-lg">Discover the world&apos;s premier poker venues</p>
 
           {/* Enhanced Filter Section */}
           <DestinationFilters
@@ -144,8 +144,8 @@ export default function PokerDestinations() {
 
           {/* Results Summary */}
           {!loading && !error && (
-            <div className="mb-6 flex items-center justify-between">
-              <p className="text-gray-300">
+            <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-2">
+              <p className="text-gray-300 text-sm md:text-base">
                 Showing <span className="text-cyan-400 font-semibold">{filteredDestinations.length}</span> of{' '}
                 <span className="text-cyan-400 font-semibold">{destinations.length}</span> destinations
               </p>
@@ -160,7 +160,7 @@ export default function PokerDestinations() {
                     maxPokerRooms: undefined,
                     hasUpcomingTournaments: undefined
                   })}
-                  className="text-cyan-400 hover:text-cyan-300 text-sm underline"
+                  className="text-cyan-400 hover:text-cyan-300 text-sm underline self-start md:self-auto"
                 >
                   Clear all filters
                 </button>
@@ -170,7 +170,7 @@ export default function PokerDestinations() {
 
           {/* Destinations Grid */}
           {!loading && !error && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
               {filteredDestinations.length > 0 ? (
                 filteredDestinations.map(destination => (
                   <DestinationCard
@@ -179,11 +179,38 @@ export default function PokerDestinations() {
                     showAddButton={true}
                   />
                 ))
+              ) : destinations.length === 0 ? (
+                <div className="col-span-full text-center py-12 md:py-20">
+                  <div className="max-w-lg mx-auto">
+                    <div className="bg-gradient-to-r from-pink-500/20 to-cyan-400/20 rounded-xl p-6 md:p-12 border border-pink-500/30">
+                      <h3 className="font-vegas text-2xl md:text-3xl text-pink-400 mb-4">🎰 Legendary Venues Coming Soon!</h3>
+                      <p className="text-gray-300 text-base md:text-lg mb-4">
+                        We're curating the most iconic poker destinations from around the globe.
+                      </p>
+                      <div className="space-y-2 mb-4">
+                        <p className="text-cyan-400 font-semibold text-sm md:text-base">
+                          🌟 Las Vegas Strip Casinos
+                        </p>
+                        <p className="text-cyan-400 font-semibold text-sm md:text-base">
+                          🎯 Monte Carlo & European Classics
+                        </p>
+                        <p className="text-cyan-400 font-semibold text-sm md:text-base">
+                          🏝️ Caribbean & Cruise Ship Poker
+                        </p>
+                      </div>
+                      <div className="bg-black/30 rounded-lg p-4 border border-cyan-400/30">
+                        <p className="text-cyan-400 text-sm">
+                          💎 Exclusive venue partnerships in development
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ) : (
-                <div className="col-span-full text-center py-20">
-                  <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 p-12">
-                    <p className="text-text-secondary text-xl mb-4">No destinations match your criteria.</p>
-                    <p className="text-gray-400 mb-6">Try adjusting your filters or search terms.</p>
+                <div className="col-span-full text-center py-12 md:py-20">
+                  <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 p-6 md:p-12 max-w-md mx-auto">
+                    <p className="text-text-secondary text-lg md:text-xl mb-4">No destinations match your criteria.</p>
+                    <p className="text-gray-400 mb-6 text-sm md:text-base">Try adjusting your filters or search terms.</p>
                     <button
                       onClick={() => handleFiltersChange({
                         searchQuery: '',

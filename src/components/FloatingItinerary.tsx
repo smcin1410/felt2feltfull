@@ -46,7 +46,7 @@ const FloatingItinerary = () => {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 bg-accent-hotpink hover:bg-pink-500 text-black p-4 rounded-full shadow-lg glow-on-hover transition-all duration-300 hover:scale-110"
+        className="fixed bottom-6 right-6 z-[100] bg-accent-hotpink hover:bg-pink-500 text-black p-4 rounded-full shadow-lg glow-on-hover transition-all duration-300 hover:scale-110"
         aria-label="View Itinerary"
       >
         <FaSuitcaseRolling size={24} />
@@ -57,7 +57,7 @@ const FloatingItinerary = () => {
 
       {/* Modal Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
           <div 
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}

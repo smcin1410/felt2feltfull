@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Righteous:wght@400&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss/theme" layer(theme);
 @import "tailwindcss/utilities" layer(utilities);
 
 /* Custom utility classes */
 .neon-glow {
-  text-shadow: 0 0 5px #22D3EE, 0 0 10px #22D3EE, 0 0 15px #22D3EE, 0 0 20px #22D3EE;
+  text-shadow: 0 0 5px #00A2A2, 0 0 10px #00A2A2, 0 0 15px #00A2A2, 0 0 20px #00A2A2;
   animation: pulse-neon 2s ease-in-out infinite alternate;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #22D3EE 0%, #EC4899 100%);
+  background: linear-gradient(135deg, #00A2A2 0%, #EC4899 100%);
   color: #0D0D0D;
   font-weight: 600;
   padding: 0.75rem 1.5rem;
@@ -22,17 +22,17 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Fredoka One', cursive;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(34, 211, 238, 0.3);
+  box-shadow: 0 10px 25px rgba(0, 162, 162, 0.3);
 }
 
 .search-bar {
   background: rgba(13, 13, 13, 0.8);
-  border: 2px solid #22D3EE;
+  border: 2px solid #00A2A2;
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   color: #E5E7EB;
@@ -44,7 +44,7 @@
 .search-bar:focus {
   outline: none;
   border-color: #EC4899;
-  box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+  box-shadow: 0 0 15px rgba(0, 162, 162, 0.3);
 }
 
 .search-bar::placeholder {
@@ -53,18 +53,18 @@
 
 .filter-btn {
   background: rgba(13, 13, 13, 0.8);
-  border: 1px solid #22D3EE;
-  color: #22D3EE;
+  border: 1px solid #00A2A2;
+  color: #00A2A2;
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Righteous', cursive;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .filter-btn:hover {
-  background: #22D3EE;
+  background: #00A2A2;
   color: #0D0D0D;
 }
 
@@ -76,25 +76,25 @@
 
 .card-style {
   background: rgba(13, 13, 13, 0.9);
-  border: 1px solid rgba(34, 211, 238, 0.3);
+  border: 1px solid rgba(0, 162, 162, 0.3);
   border-radius: 0.75rem;
   padding: 1.5rem;
   transition: all 0.3s ease;
 }
 
 .card-style:hover {
-  border-color: #22D3EE;
-  box-shadow: 0 10px 30px rgba(34, 211, 238, 0.2);
+  border-color: #00A2A2;
+  box-shadow: 0 10px 30px rgba(0, 162, 162, 0.2);
   transform: translateY(-5px);
 }
 
 /* Animations */
 @keyframes pulse-neon {
   0% {
-    text-shadow: 0 0 5px #22D3EE, 0 0 10px #22D3EE, 0 0 15px #22D3EE, 0 0 20px #22D3EE;
+    text-shadow: 0 0 5px #00A2A2, 0 0 10px #00A2A2, 0 0 15px #00A2A2, 0 0 20px #00A2A2;
   }
   100% {
-    text-shadow: 0 0 10px #22D3EE, 0 0 20px #22D3EE, 0 0 30px #22D3EE, 0 0 40px #22D3EE, 0 0 50px #22D3EE;
+    text-shadow: 0 0 10px #00A2A2, 0 0 20px #00A2A2, 0 0 30px #00A2A2, 0 0 40px #00A2A2, 0 0 50px #00A2A2;
   }
 }
 
@@ -117,7 +117,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #22D3EE;
+  background: #00A2A2;
   border-radius: 4px;
 }
 

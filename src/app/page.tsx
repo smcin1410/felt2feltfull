@@ -9,7 +9,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="text-center py-20 bg-[#0D0D0D]">
         <div className="max-w-4xl mx-auto px-4">
-          <h1 className="font-orbitron text-5xl md:text-6xl font-bold mb-6 neon-glow">
+          <h1 className="font-vegas text-4xl md:text-5xl lg:text-6xl font-bold mb-6 neon-glow">
             Your Personal Poker Concierge
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">

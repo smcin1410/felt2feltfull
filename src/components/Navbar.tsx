@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 import { useItineraryCount } from '@/store/itineraryStore';
-import { FaBars, FaTimes, FaSuitcaseRolling } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser, FaSignOutAlt } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const { data: session } = useSession();
   const itemCount = useItineraryCount();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -27,7 +30,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="text-2xl font-orbitron font-bold neon-glow">
+            <span className="text-2xl font-vegas font-bold neon-glow">
               Felt2Felt
             </span>
           </Link>
@@ -45,28 +48,63 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Itinerary Icon */}
-          <div className="hidden md:flex items-center">
-            <button className="relative p-2 text-white hover:text-pink-500 transition-colors duration-200">
-              <FaSuitcaseRolling size={20} />
-              {mounted && itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-pink-500 text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
-                  {itemCount}
-                </span>
-              )}
+          {/* Profile Icon */}
+          <div className="hidden md:flex items-center relative">
+            <button
+              onClick={() => setShowProfileMenu(!showProfileMenu)}
+              className="relative p-2 text-white hover:text-pink-500 transition-colors duration-200"
+            >
+              <FaUser size={20} />
             </button>
+            
+            {/* Profile Dropdown */}
+            {showProfileMenu && (
+              <div className="absolute right-0 top-full mt-2 w-48 bg-gray-800 rounded-lg shadow-lg border border-gray-700 z-50">
+                {session ? (
+                  <>
+                    <div className="px-4 py-3 border-b border-gray-700">
+                      <p className="text-sm text-gray-300">Signed in as</p>
+                      <p className="text-sm font-medium text-white truncate">{session.user?.email}</p>
+                    </div>
+                    <Link
+                      href="/profile"
+                      className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
+                      onClick={() => setShowProfileMenu(false)}
+                    >
+                      My Profile
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setShowProfileMenu(false);
+                        signOut();
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white flex items-center"
+                    >
+                      <FaSignOutAlt className="mr-2" />
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/auth/signin"
+                    className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
+                    onClick={() => setShowProfileMenu(false)}
+                  >
+                    Sign In
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-4">
-            {/* Mobile Itinerary Icon */}
-            <button className="relative p-2 text-white hover:text-pink-500 transition-colors duration-200">
-              <FaSuitcaseRolling size={18} />
-              {mounted && itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-pink-500 text-black text-xs rounded-full h-4 w-4 flex items-center justify-center font-bold text-[10px]">
-                  {itemCount}
-                </span>
-              )}
+            {/* Mobile Profile Icon */}
+            <button
+              onClick={() => setShowProfileMenu(!showProfileMenu)}
+              className="relative p-2 text-white hover:text-pink-500 transition-colors duration-200"
+            >
+              <FaUser size={18} />
             </button>
             
             <button
@@ -92,6 +130,52 @@ const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
+              
+              {/* Mobile Profile Menu */}
+              {showProfileMenu && (
+                <div className="px-2 pt-2 pb-3 border-t border-gray-700">
+                  {session ? (
+                    <>
+                      <div className="px-3 py-2">
+                        <p className="text-xs text-gray-400">Signed in as</p>
+                        <p className="text-sm font-medium text-white truncate">{session.user?.email}</p>
+                      </div>
+                      <Link
+                        href="/profile"
+                        className="block px-3 py-2 text-white hover:text-cyan-400 hover:bg-gray-700/50 rounded-md transition-all duration-200"
+                        onClick={() => {
+                          setIsOpen(false);
+                          setShowProfileMenu(false);
+                        }}
+                      >
+                        My Profile
+                      </Link>
+                      <button
+                        onClick={() => {
+                          setIsOpen(false);
+                          setShowProfileMenu(false);
+                          signOut();
+                        }}
+                        className="w-full text-left px-3 py-2 text-white hover:text-cyan-400 hover:bg-gray-700/50 rounded-md transition-all duration-200 flex items-center"
+                      >
+                        <FaSignOutAlt className="mr-2" />
+                        Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <Link
+                      href="/auth/signin"
+                      className="block px-3 py-2 text-white hover:text-cyan-400 hover:bg-gray-700/50 rounded-md transition-all duration-200"
+                      onClick={() => {
+                        setIsOpen(false);
+                        setShowProfileMenu(false);
+                      }}
+                    >
+                      Sign In
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}

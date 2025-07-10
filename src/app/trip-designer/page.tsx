@@ -177,14 +177,14 @@ export default function TripDesignerPage() {
         <meta name="description" content="Design your perfect poker trip." />
       </Head>
       <main className="min-h-screen bg-[#0D0D0D]">
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-8 md:py-12">
           {/* Header with collaboration controls */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
             <div className="text-center lg:text-left mb-6 lg:mb-0">
-              <h1 className="text-5xl font-orbitron font-bold mb-4 neon-glow">
+              <h1 className="text-5xl font-vegas font-bold mb-4 neon-glow">
                 {currentItinerary?.name || 'INTERACTIVE TRIP PLANNER'}
               </h1>
-              <p className="text-gray-300 text-lg">Build your custom poker itinerary in a few easy steps</p>
+              <p className="text-gray-300 text-lg">Build your custom poker trip in a few easy steps</p>
             </div>
             
             {/* Collaboration Controls */}
@@ -287,7 +287,7 @@ export default function TripDesignerPage() {
             <div className="lg:col-span-2">
               {currentStep === 'destinations' && (
                 <div className="card-style p-8">
-                  <h2 className="text-3xl font-orbitron font-bold mb-6 flex items-center text-white">
+                  <h2 className="text-3xl font-vegas font-bold mb-6 flex items-center text-white">
                     <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-black rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">1</span>
                     Select Destinations
                   </h2>
@@ -313,7 +313,7 @@ export default function TripDesignerPage() {
 
               {currentStep === 'tournaments' && (
                 <div className="card-style p-8">
-                  <h2 className="text-3xl font-orbitron font-bold mb-6 flex items-center text-white">
+                  <h2 className="text-3xl font-vegas font-bold mb-6 flex items-center text-white">
                     <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-black rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">2</span>
                     Find Tournaments
                   </h2>
@@ -344,7 +344,7 @@ export default function TripDesignerPage() {
 
               {currentStep === 'summary' && (
                 <div className="card-style p-8">
-                  <h2 className="text-3xl font-orbitron font-bold mb-6 flex items-center text-white">
+                  <h2 className="text-3xl font-vegas font-bold mb-6 flex items-center text-white">
                     <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-black rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">3</span>
                     Trip Summary
                   </h2>
