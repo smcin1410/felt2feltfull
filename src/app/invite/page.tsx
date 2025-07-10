@@ -236,9 +236,3 @@ export default function InvitePage() {
     </Suspense>
   );
 }
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
