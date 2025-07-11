@@ -26,29 +26,25 @@ export default function CommunityPot() {
   };
 
   return (
-    <section className="community-pot-section">
+    <section className="relative w-full h-[340px] md:h-[420px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div className="community-pot-bg">
-        <Image
-          src={imageSrc}
-          alt="Community Pot Background"
-          fill
-          className="object-cover"
-          sizes="100vw"
-          onError={handleImageError}
-        />
-      </div>
-
+      <Image
+        src={imageSrc}
+        alt="Community Pot Background"
+        fill
+        className="object-cover object-center z-0"
+        sizes="100vw"
+        onError={handleImageError}
+      />
       {/* Overlay */}
-      <div className="community-pot-overlay"></div>
-
+      <div className="absolute inset-0 bg-black/70 z-10" />
       {/* Content */}
-      <div className="community-pot-content">
-        <h2 className="community-pot-title">THE COMMUNITY POT</h2>
-        <p className="community-pot-subtitle">
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
+        <h2 className="neon-glow text-4xl md:text-5xl font-bold mb-4">THE COMMUNITY POT</h2>
+        <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
           Share your stories, find travel partners, and get the real scoop from players on the felt.
         </p>
-        <button className="community-pot-btn">
+        <button className="neon-btn-pink text-lg px-8 py-3">
           Join The Conversation
         </button>
       </div>

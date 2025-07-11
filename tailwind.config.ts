@@ -1,4 +1,10 @@
 const config = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
       colors: {
@@ -13,9 +19,18 @@ const config = {
         'poppins': ['Poppins', 'sans-serif'],
         'roboto': ['Roboto', 'sans-serif'],
         'monoton': ['Monoton', 'cursive'],
-        'vegas': ['Poppins', 'sans-serif'], // Keep for backward compatibility
-        'retro': ['Poppins', 'sans-serif'], // Keep for backward compatibility
-        sans: ['Roboto', 'sans-serif'],
+        'vegas': ['Poppins', 'sans-serif'],
+        'retro': ['Poppins', 'sans-serif'],
+        sans: ['Poppins', 'Roboto', 'sans-serif'], // Set Poppins as default
+      },
+      boxShadow: {
+        'neon-cyan': '0 0 8px #00FFFF, 0 0 16px #00FFFF33',
+        'neon-pink': '0 0 8px #FF1493, 0 0 16px #FF149344',
+        'neon-cyan-strong': '0 0 16px #00FFFF, 0 0 32px #00FFFF66',
+        'neon-pink-strong': '0 0 16px #FF1493, 0 0 32px #FF149388',
+      },
+      backgroundImage: {
+        'frosted-glass': 'linear-gradient(135deg, rgba(31,41,55,0.7) 0%, rgba(31,41,55,0.9) 100%)',
       },
       animation: {
         'pulse-neon': 'pulse-neon 2s ease-in-out infinite alternate',
@@ -41,6 +56,10 @@ const config = {
       },
     },
   },
+  safelist: [
+    'neon-glow', 'neon-glow-pink', 'neon-btn', 'neon-btn-pink', 'neon-border', 'neon-border-pink', 'frosted-glass', 'neon-card',
+    'shadow-neon-cyan', 'shadow-neon-pink', 'shadow-neon-cyan-strong', 'shadow-neon-pink-strong',
+  ],
 }
 
 export default config

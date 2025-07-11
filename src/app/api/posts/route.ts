@@ -11,7 +11,8 @@ const mockCommunityPosts = [
     replies: 12,
     likes: 8,
     category: 'Travel Partners',
-    isBlogPost: false
+    isBlogPost: false,
+    blogPostId: null
   },
   {
     _id: '2',
@@ -22,7 +23,8 @@ const mockCommunityPosts = [
     replies: 18,
     likes: 15,
     category: 'Poker Rooms',
-    isBlogPost: false
+    isBlogPost: false,
+    blogPostId: null
   },
   {
     _id: '3',
@@ -33,7 +35,8 @@ const mockCommunityPosts = [
     replies: 25,
     likes: 32,
     category: 'Trip Reports',
-    isBlogPost: false
+    isBlogPost: false,
+    blogPostId: null
   },
   {
     _id: '4',
@@ -44,7 +47,8 @@ const mockCommunityPosts = [
     replies: 31,
     likes: 22,
     category: 'Strategy',
-    isBlogPost: false
+    isBlogPost: false,
+    blogPostId: null
   },
   {
     _id: '5',
@@ -55,7 +59,8 @@ const mockCommunityPosts = [
     replies: 14,
     likes: 19,
     category: 'Destinations',
-    isBlogPost: false
+    isBlogPost: false,
+    blogPostId: null
   },
   {
     _id: '6',
@@ -66,14 +71,16 @@ const mockCommunityPosts = [
     replies: 27,
     likes: 35,
     category: 'Strategy',
-    isBlogPost: false
+    isBlogPost: false,
+    blogPostId: null
   }
 ];
 
 export async function GET() {
   try {
-    // Return mock data for community posts
-    return NextResponse.json(mockCommunityPosts);
+    // Filter out posts that have a blogPostId (only return general community posts)
+    const communityOnlyPosts = mockCommunityPosts.filter(post => !post.blogPostId);
+    return NextResponse.json(communityOnlyPosts);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
     return NextResponse.json({ error: errorMessage }, { status: 500 });

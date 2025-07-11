@@ -114,12 +114,12 @@ export default function PokerDestinations() {
       <main className="destinations-page">
         <div className="destinations-page-container">
           <div className="destinations-header">
-            <h1 className="destinations-page-title">Poker Destinations</h1>
-            <p className="destinations-page-subtitle">Discover the world&apos;s premier poker venues</p>
+            <h1 className="destinations-page-title neon-glow text-4xl md:text-5xl font-bold text-center mb-4">Poker Destinations</h1>
+            <p className="destinations-page-subtitle text-gray-300 mb-6">Discover the world&apos;s premier poker venues</p>
           </div>
 
           {/* Enhanced Filter Section */}
-          <div className="destinations-filters-section">
+          <div className="destinations-filters-section frosted-glass neon-card mb-8">
             <DestinationFilters
               filters={filters}
               onFiltersChange={handleFiltersChange}
@@ -131,17 +131,17 @@ export default function PokerDestinations() {
 
           {/* Loading State */}
           {loading && (
-            <div className="destinations-loading">
-              <div className="destinations-loading-spinner"></div>
-              <p className="destinations-loading-text">Loading destinations...</p>
+            <div className="destinations-loading text-center p-8">
+              <div className="destinations-loading-spinner animate-spin rounded-full h-12 w-12 border-b-2 border-accent-neon mx-auto mb-4"></div>
+              <p className="destinations-loading-text text-gray-300">Loading destinations...</p>
             </div>
           )}
 
           {/* Error State */}
           {error && (
-            <div className="destinations-error">
-              <div className="destinations-error-card">
-                <p className="destinations-error-text">Error: {error}</p>
+            <div className="destinations-error text-center p-8">
+              <div className="destinations-error-card frosted-glass neon-card border border-accent-hotpink">
+                <p className="destinations-error-text text-accent-hotpink font-semibold">Error: {error}</p>
               </div>
             </div>
           )}

@@ -128,12 +128,12 @@ export default function TournamentCalendar() {
       <main className="tournaments-page">
         <div className="tournaments-page-container">
           <div className="tournaments-header">
-            <h1 className="tournaments-page-title">Tournament Calendar</h1>
-            <p className="tournaments-page-subtitle">Find your next big tournament</p>
+            <h1 className="tournaments-page-title neon-glow text-4xl md:text-5xl font-bold text-center mb-4">Tournament Calendar</h1>
+            <p className="tournaments-page-subtitle text-gray-300 mb-6">Find your next big tournament</p>
           </div>
 
           {/* Enhanced Filter Section */}
-          <div className="tournaments-filters-section">
+          <div className="tournaments-filters-section frosted-glass neon-card mb-8">
             <TournamentFilters
               filters={filters}
               onFiltersChange={handleFiltersChange}
@@ -145,17 +145,17 @@ export default function TournamentCalendar() {
 
           {/* Loading State */}
           {loading && (
-            <div className="tournaments-loading">
-              <div className="tournaments-loading-spinner"></div>
-              <p className="tournaments-loading-text">Loading tournaments...</p>
+            <div className="tournaments-loading text-center p-8">
+              <div className="tournaments-loading-spinner animate-spin rounded-full h-12 w-12 border-b-2 border-accent-neon mx-auto mb-4"></div>
+              <p className="tournaments-loading-text text-gray-300">Loading tournaments...</p>
             </div>
           )}
 
           {/* Error State */}
           {error && (
-            <div className="tournaments-error">
-              <div className="tournaments-error-card">
-                <p className="tournaments-error-text">Error: {error}</p>
+            <div className="tournaments-error text-center p-8">
+              <div className="tournaments-error-card frosted-glass neon-card border border-accent-hotpink">
+                <p className="tournaments-error-text text-accent-hotpink font-semibold">Error: {error}</p>
               </div>
             </div>
           )}

@@ -45,50 +45,50 @@ const UpcomingTournaments = () => {
   }, []);
 
   return (
-    <section className="tournaments-section">
-      <div className="tournaments-container">
-        <h2 className="tournaments-section-title">
+    <section className="tournaments-section py-8">
+      <div className="tournaments-container max-w-3xl mx-auto">
+        <h2 className="tournaments-section-title neon-glow text-3xl md:text-4xl font-bold text-center mb-8">
           Upcoming Tournaments
         </h2>
         <div className="tournaments-content">
           {loading && (
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
-            <p className="text-gray-300">Loading the latest events...</p>
-          </div>
-        )}
-        {error && (
-          <div className="text-center p-6 bg-red-900/20 rounded-lg border border-red-500/30">
-            <p className="text-red-400 font-semibold">Error: {error}</p>
-          </div>
-        )}
-        {!loading && !error && (
-          <div className="tournaments-grid-wrapper">
-            {tournaments.length > 0 ? (
-              <div className="tournaments-grid">
-                {tournaments.map((t) => (
-                  <div key={t._id} className="tournament-card">
-                    <h3 className="tournament-card-title">{t.name}</h3>
-                    <p className="tournament-card-location">{t.location}</p>
-                    <p className="tournament-card-date">{format(new Date(t.date), 'MMM dd, yyyy')}</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="tournaments-empty-state">
-                <div className="tournaments-empty-card">
-                  <h3 className="tournaments-empty-title">🎰 Big Events Coming Soon!</h3>
-                  <p className="tournaments-empty-text">
+            <div className="text-center p-8">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-neon mx-auto mb-4"></div>
+              <p className="text-gray-300">Loading the latest events...</p>
+            </div>
+          )}
+          {error && (
+            <div className="text-center p-6 border border-accent-hotpink rounded-xl bg-[#181A20]/80">
+              <p className="text-accent-hotpink font-semibold">Error: {error}</p>
+            </div>
+          )}
+          {!loading && !error && (
+            <div className="w-full">
+              {tournaments.length > 0 ? (
+                <ul className="divide-y divide-gray-700 w-full">
+                  {tournaments.map((t) => (
+                    <li key={t._id} className="py-4 text-center">
+                      <span className="font-bold text-lg text-white">{t.name}</span>
+                      <span className="mx-2 text-gray-400">|</span>
+                      <span className="text-gray-300">{t.location}</span>
+                      <span className="mx-2 text-gray-400">|</span>
+                      <span className="text-gray-400">{format(new Date(t.date), 'MMM dd, yyyy')}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="text-center py-8">
+                  <h3 className="neon-glow text-xl mb-2">🎰 Big Events Coming Soon!</h3>
+                  <p className="text-gray-300">
                     We're working with top casinos to bring you the hottest tournaments in Vegas and beyond.
                   </p>
-                  <p className="tournaments-empty-cta">
+                  <p className="text-accent-neon mt-2">
                     Be the first to know when they drop! 🔥
                   </p>
                 </div>
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>

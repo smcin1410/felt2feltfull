@@ -23,6 +23,12 @@ const PostSchema = new mongoose.Schema({
         default: 'New Hand'
     },
     city: { type: String },
+    blogPostId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BlogPost',
+        required: false,
+        index: true
+    },
     comments: [{
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
         authorEmail: { type: String },

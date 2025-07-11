@@ -38,30 +38,26 @@ export default function FindNextFelt() {
 
   return (
     <section>
-      <h2 className="destinations-title">
+      <h2 className="destinations-title neon-glow text-3xl md:text-4xl font-bold text-center mb-8">
         Find Your Next Felt
       </h2>
-      <div className="destinations-grid-container">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {destinations.map((destination) => (
-          <div key={destination.id} className="destination-card">
+          <div key={destination.id} className="relative rounded-xl overflow-hidden group h-56 flex items-end shadow-lg">
             {/* Background Image */}
-            <div className="destination-image">
-              <Image
-                src={imageErrors[destination.id] ? destination.fallback : destination.image}
-                alt={`${destination.title} Background`}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-110"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                onError={() => handleImageError(destination.id)}
-              />
-            </div>
-            
+            <Image
+              src={imageErrors[destination.id] ? destination.fallback : destination.image}
+              alt={`${destination.title} Background`}
+              fill
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-300 z-0"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              onError={() => handleImageError(destination.id)}
+            />
             {/* Overlay */}
-            <div className="destination-overlay"></div>
-            
+            <div className="absolute inset-0 bg-black/30 z-10" />
             {/* Title Overlay */}
-            <div className="destination-title-overlay">
-              <h3 className="destination-name">
+            <div className="relative z-20 w-full p-4 flex items-end justify-center">
+              <h3 className="neon-glow text-xl font-bold text-center text-white drop-shadow-md">
                 {destination.title}
               </h3>
             </div>
