@@ -11,7 +11,7 @@ export default function BlogSidebar() {
             <a href="/blog/cash-in-cage" className="text-pink-400 hover:underline">Cash in the Cage: A Guide to Bankroll Security</a>
           </li>
           <li>
-            <a href="/blog/healthy-on-road" className="text-pink-400 hover:underline">Don't Tilt Your Body: Staying Healthy on the Road</a>
+            <a href="/blog/healthy-on-road" className="text-pink-400 hover:underline">Don&apos;t Tilt Your Body: Staying Healthy on the Road</a>
           </li>
         </ul>
       </div>

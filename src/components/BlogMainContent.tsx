@@ -17,8 +17,8 @@ export default function BlogMainContent() {
       </div>
       <div className="text-gray-400 text-sm px-8 mt-2">By Felt2Felt Staff • June 15, 2025</div>
       <div className="prose prose-invert max-w-none text-gray-200 px-8 pb-8">
-        <p>As a poker player, you know the house doesn't have an edge against your skill...</p>
-        <p>It's Not About Losses, It's About Hours...</p>
+        <p>As a poker player, you know the house doesn&apos;t have an edge against your skill...</p>
+        <p>It&apos;s Not About Losses, It&apos;s About Hours...</p>
       </div>
     </article>
   );
