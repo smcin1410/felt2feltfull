@@ -1,0 +1,71 @@
+Felt2Felt.com is a website for traveling poker players, designed to be a **"Fresh Start" rebuild** from a previous WordPress setup, migrating to a **unified, modern, and performant Next.js application**. The core objective of the rebuild was to create a performant, maintainable, and **AI-friendly platform**, moving away from a "clunky, separated stack" to an integrated, cohesive system.
+
+The project leverages a **"closed-loop, multi-agent AI workflow"** with distinct roles: The Director (User), The Project Manager (NotebookLM), The Solutions Architect (Gemini Pro), and The Code Agent (Roo Code).
+
+Here is a detailed outline of the website's functionality:
+
+### **I. Core Technology and Architecture**
+*   **Framework**: Built using **Next.js**, chosen for its integrated frontend and backend capabilities (API Routes), server-side rendering for performance, and a robust React-based component architecture. It uses the **modern App Router** and a `src/` directory for organized source code.
+*   **Language**: **TypeScript** is configured for type safety, with comprehensive interfaces for all data types in `src/lib/types.ts`, replacing previous `any` types.
+*   **Styling**: **Tailwind CSS** is adopted for a utility-first styling approach, with custom color palettes and font configurations.
+*   **Database**: **MongoDB** is the chosen database, with a secure connection established via `src/lib/mongodb.ts`. Mongoose schemas (e.g., Location, Tournament, Post) are configured for efficient data management. A key debugging step involved **pre-registering all database models** in the `dbConnect` utility for a robust connection.
+*   **State Management**: **Zustand** is implemented for global state management with **localStorage persistence**, enhancing the trip designer and itinerary functionality.
+
+### **II. Implemented Features and Functionality**
+
+**A. Backend API and Data Handling**
+*   **API Endpoints**: Migration of backend logic from Express.js into Next.js API Routes within `src/app/api/`.
+    *   `GET /api/tournaments`: Fetches upcoming tournament data.
+    *   `GET /api/blog`: Fetches the latest blog posts.
+    *   Additional routes for `/api/destinations` and `/api/posts`.
+*   **Data Fetching & Error Handling**: Components fetch data from API routes on the client side, showing a "loading" state. Robust error handling is implemented to catch network or server errors and display user-friendly messages. "Failed to fetch" errors due to CORS issues in development were resolved using Next.js rewrites.
+*   **Image Handling**: Addressed "Bad Request" errors (400) by creating a utility to inject valid, random image paths into API responses to prevent broken images.
+
+**B. Frontend UI and Design**
+*   **Core Layout & Navigation**:
+    *   A **reusable, responsive Navbar.tsx** component serves as the primary site navigation, including a **hamburger menu for mobile devices**. It is integrated into the root layout (`src/app/layout.tsx`) to appear on every page.
+*   **Homepage Construction**: Modular React components are organized within `src/components/homepage/`.
+    *   **Main Header**: "Your Personal Poker Concierge".
+    *   **"Upcoming Tournaments"**: Fetches and displays dynamic data from `/api/tournaments` with a "loading" state.
+    *   **"Community Pot"**: A static section (with a "Join The Conversation" button) designed to match the visual identity, but planned for deeper integration.
+    *   **"Find Your Next Felt"**: Displays destination cards (Las Vegas, South Florida, London).
+    *   **"Latest Intel from the Blog"**: Fetches and displays the most recent blog post from `/api/blog` (including image, title, and excerpt).
+*   **Visual Identity**:
+    *   **Typography**: The **Orbitron typeface** is identified and implemented as the primary font, chosen for its geometric, futuristic aesthetic and variable weights (400, 500, 700, 900). It's imported via `@import` in `src/globals.css` and configured in `tailwind.config.js`.
+    *   **Color Palette**: A custom Tailwind CSS color palette is defined to match the dark, poker-themed aesthetic, including: `background` (#0D0D0D), `text-primary` (#E5E7EB), `text-secondary` (#9CA3AF), `accent-neon` (#22D3EE), and `accent-hotpink` (#EC4899).
+    *   **Neon Glow Effect**: The signature neon text effect is achieved using **layered `text-shadow` CSS properties**. A `.text-glow-neon` utility class is created in `src/globals.css`.
+    *   **Pulsating Animation**: A subtle, continuous "humming" effect is added to the neon text using **CSS `@keyframes` animation (`pulse-neon`)** on the `text-shadow` property.
+*   **UI Component Recipes**: Reusable components are built for various UI elements:
+    *   **Homepage Banners and Cards**: Use a **dark, semi-transparent CSS gradient overlay** (`bg-gradient-to-t from-black/80...`) on background images to ensure text readability.
+    *   **Styled Inputs and Filters**: Borderless, rounded inputs with semi-transparent backgrounds (`bg-gray-800/50`) and a `focus:ring-accent-neon` for visual feedback.
+    *   **Buttons**: Primary buttons use `bg-accent-hotpink` with **`hover:scale-105`** and `focus:ring` states for interactivity and accessibility.
+
+**C. Specific System Functionalities**
+*   **Itinerary System**:
+    *   A **FloatingItineraryIcon.tsx component** with a **slide-out sidebar** is created, replacing a previous modal-based version.
+    *   It's integrated into `src/app/layout.tsx` to **persist across all pages**.
+    *   Uses the existing **Zustand store** with `localStorage` persistence to manage itinerary data, with components only rendering when items are present.
+*   **Collaborative Trip Designer**: (The "Interactive Trip Planner")
+    *   **Authentication System**: **NextAuth.js** is integrated with credentials and Google OAuth providers. User registration/login includes **bcryptjs password hashing** and **JWT session management**. Route protection middleware is added for authenticated pages.
+    *   **Database Models**: The User model is updated with authentication fields, the **Itinerary model is enhanced with `owner` and `collaborators` fields**, and a new **Invitation model** is created for email invitations.
+    *   **API Infrastructure**: Authentication endpoints, Itinerary CRUD operations with **access control**, and an **Invitation system** (`/api/itinerary/invite`, `/api/itinerary/accept-invite`) are implemented. Real-time collaboration endpoints for Pusher are also set up.
+    *   **User Interface for Collaboration**: Includes authentication pages (signin/signup), an **enhanced Trip Designer with collaboration features**, an `InviteModal.tsx` for sending invitations (with role selection), a `CollaboratorList.tsx` showing team members and their roles, and an invitation acceptance page (`/invite`).
+    *   **Real-time Collaboration**: **Pusher is integrated for live synchronization** of changes. A `useCollaboration.ts` hook manages real-time events, with connection status indicators and event broadcasting for itinerary updates across all collaborators.
+    *   **Security & Validation**: Comprehensive **input validation (Zod schemas)**, **API rate limiting**, input sanitization, XSS protection, **permission-based access control (owner/editor/viewer roles)**, security headers, and CSRF protection are implemented.
+
+**D. Code Quality and Accessibility**
+*   **Code Quality**: All ESLint errors (over 20 issues) have been fixed, achieving a status of **"0 errors, 2 warnings"** (the warnings are for performance optimizations related to `next/image` components, not blocking issues). Full type safety with comprehensive TypeScript interfaces is ensured.
+*   **Accessibility**:
+    *   **Color Contrast Compliance**: The chosen dark color palette is confirmed to meet and often exceed **WCAG 2.1 Level AA and AAA standards** for text-to-background contrast, ensuring readability.
+    *   **Respecting User Motion Preferences**: The pulsating neon animation is conditionally disabled using the **`@media (prefers-reduced-motion: reduce)` CSS media query**, providing a safe and comfortable browsing experience for users sensitive to motion.
+
+### **III. Deployment and Project Status**
+*   **Version Control & Deployment**: The project is hosted on GitHub (current repository: `https://github.com/smcin1410/felt2feltfull.git`) and connected to **Vercel for automatic deployments**.
+*   **Custom Domain**: The custom domain `felt2felt.com` is successfully configured and points to the live Next.js application hosted on Vercel.
+*   **Troubleshooting**: Complex build failures on Vercel (e.g., module not found, file structure errors, `tsconfig.json` issues, misleading root layout errors, MongoDB connection blockers, Git push timeouts due to large image files) were systematically resolved.
+*   **Current Status**: The Felt2Felt Next.js application is **successfully built, deployed, and live on the custom domain**, displaying the correct homepage layout.
+
+### **IV. Future Considerations (Planned Enhancements)**
+*   **Affiliate Links for Hotel Booking**: Integration of affiliate links for hotel booking is a planned future feature.
+*   **"The Community Pot" Page**: While a static section on the homepage, the plan is to consolidate the Blog and Community sections into a single, unified "The Community Pot" page (`/community` route) with a specific two-column layout and interactive blog post expansion. A crucial new requirement is that **every time a blog/article is loaded onto the site, it should automatically create a dedicated forum post**.
+*   **Collaborative Trip Designer Enhancements**: While much of the collaboration is implemented, there might be further refinements for permission levels, real-time indicators (e.g., showing who is viewing/editing, cursors), and acceptance flow.

@@ -1,0 +1,299 @@
+{
+  "website": {
+    "universal_elements": {
+      "navbar": {
+        "logo": {
+          "type": "text",
+          "content": "felt2felt.com",
+          "href": "/homepage"
+        },
+        "links": [
+          {
+            "id": "trip_designer",
+            "text": "Trip Designer",
+            "href": "/trip-designer"
+          },
+          {
+            "id": "destinations",
+            "text": "Destinations",
+            "href": "/destinations"
+          },
+          {
+            "id": "tournaments",
+            "text": "Tournaments",
+            "href": "/tournaments"
+          },
+          {
+            "id": "community",
+            "text": "Community",
+            "href": "/community"
+          },
+          {
+            "id": "blog",
+            "text": "Blog",
+            "href": "/blog"
+          }
+        ],
+        "actions": [
+          {
+            "id": "sign_in",
+            "type": "button",
+            "text": "Sign In",
+            "icon": "user-icon"
+          },
+          {
+            "id": "search",
+            "type": "icon-button",
+            "icon": "search-icon"
+          }
+        ]
+      },
+      "floating_icons": [
+        {
+          "id": "itinerary_window",
+          "position": "bottom-left",
+          "icon": "suitcase-icon",
+          "tooltip": "View Your Itinerary",
+          "action": "openItineraryModal"
+        },
+        {
+          "id": "back_to_top",
+          "position": "bottom-right",
+          "icon": "arrow-up-icon",
+          "tooltip": "Back to Top",
+          "action": "scrollToTop"
+        }
+      ]
+    },
+    "pages": {
+      "homepage": {
+        "title": "Homepage",
+        "path": "/",
+        "components": [
+          {
+            "type": "hero",
+            "id": "poker_concierge",
+            "title": "Your Personal Poker Concierge",
+            "subtitle": "Don't just find a random trip. Design the perfect one. Tell us what you're looking for, and we'll point you to the right felt.",
+            "cta_button": {
+              "text": "Find Your Action",
+              "href": "/trip-designer"
+            }
+          },
+          {
+            "type": "dynamic_content",
+            "id": "upcoming_tournaments",
+            "title": "Upcoming Tournaments",
+            "placeholder": "Loading the latest events..."
+          },
+          {
+            "type": "promo_banner",
+            "id": "community_pot",
+            "background_image": "url-to-community-banner-image.jpg",
+            "title": "THE COMMUNITY POT",
+            "subtitle": "Share your stories, find travel partners, and get the real scoop from players on the felt.",
+            "cta_button": {
+              "text": "Join The Conversation",
+              "href": "/community"
+            }
+          },
+          {
+            "type": "card_grid",
+            "id": "find_next_felt",
+            "title": "Find Your Next Felt",
+            "cards": [
+              {
+                "id": "las_vegas",
+                "image": "url-to-vegas-image.jpg",
+                "title": "Las Vegas",
+                "href": "/destinations/las-vegas"
+              },
+              {
+                "id": "south_florida",
+                "image": "url-to-florida-image.jpg",
+                "title": "South Florida",
+                "href": "/destinations/south-florida"
+              },
+              {
+                "id": "london",
+                "image": "url-to-london-image.jpg",
+                "title": "London",
+                "href": "/destinations/london"
+              }
+            ]
+          },
+          {
+            "type": "featured_post",
+            "id": "latest_intel",
+            "title": "Latest Intel from the Blog",
+            "post": {
+              "image": "url-to-blog-card-image.jpg",
+              "title": "That Little Card is Your Biggest Comp",
+              "excerpt": "As a poker player, you know the house doesn't have an edge against your skill. This often leads players to believe that the casino's loyalty programs aren't for them...",
+              "read_more_link": "/blog/that-little-card"
+            }
+          }
+        ]
+      },
+      "trip_designer": {
+        "title": "Interactive Trip Planner",
+        "path": "/trip-designer",
+        "components": [
+          {
+            "type": "page_header",
+            "id": "main_title",
+            "title": "Interactive Trip Planner",
+            "subtitle": "Select a city to see available poker rooms and upcoming tournament series."
+          },
+          {
+            "type": "trip_planner_tool",
+            "id": "planner_interface",
+            "steps": [
+              {
+                "step": 1,
+                "title": "Select a Destination",
+                "input": {
+                  "type": "dropdown",
+                  "label": "City",
+                  "placeholder": "Could not load cities",
+                  "api_endpoint": "/api/cities"
+                }
+              }
+            ],
+            "map_view": {
+              "id": "interactive_map",
+              "placeholder": "Map will appear here."
+            },
+            "summary_view": {
+              "id": "trip_summary",
+              "placeholder": "Your trip summary will appear here."
+            }
+          }
+        ]
+      },
+      "destinations": {
+        "title": "Poker Destinations",
+        "path": "/destinations",
+        "components": [
+          {
+            "type": "page_header",
+            "id": "main_title",
+            "title": "Poker Destinations"
+          },
+          {
+            "type": "search_and_filter",
+            "id": "destination_search",
+            "search_bar": {
+              "placeholder": "Search by City, Venue, State or Country..."
+            },
+            "filters": [
+              { "id": "country", "label": "All Countries", "options_api": "/api/countries" },
+              { "id": "state", "label": "All States/Provinces", "options_api": "/api/states" },
+              { "id": "city", "label": "All Cities", "options_api": "/api/cities" }
+            ]
+          },
+          {
+            "type": "results_area",
+            "id": "destination_results",
+            "placeholder": "Results will be displayed here."
+          }
+        ]
+      },
+      "tournaments": {
+        "title": "Tournament Calendar",
+        "path": "/tournaments",
+        "components": [
+          {
+            "type": "page_header",
+            "id": "main_title",
+            "title": "Tournament Calendar"
+          },
+          {
+            "type": "search_and_filter",
+            "id": "tournament_search",
+            "search_bar": {
+              "placeholder": "Search by series, venue, or location..."
+            },
+            "actions": [
+              {
+                "type": "button",
+                "text": "Filters",
+                "icon": "filter-icon"
+              }
+            ]
+          },
+          {
+            "type": "results_area",
+            "id": "tournament_results",
+            "placeholder": "Tournament schedule will be displayed here."
+          }
+        ]
+      },
+      "community": {
+        "title": "The Community Pot",
+        "path": "/community",
+        "components": [
+          {
+            "type": "promo_box",
+            "id": "community_header",
+            "title": "THE COMMUNITY POT",
+            "subtitle": "Share your stories, find travel partners, and get the real scoop from players on the felt.",
+            "cta_button": {
+              "text": "Create New Post",
+              "action": "openCreatePostModal"
+            }
+          },
+          {
+            "type": "search_and_filter",
+            "id": "community_search",
+            "search_bar": {
+              "placeholder": "Search posts by keyword..."
+            },
+            "filters": [
+              { "id": "city_filter", "label": "Filter by City", "options_api": "/api/cities" }
+            ]
+          },
+          {
+            "type": "results_area",
+            "id": "community_posts",
+            "placeholder": "Community posts will be displayed here."
+          }
+        ]
+      },
+      "blog": {
+        "title": "Blog",
+        "path": "/blog",
+        "layout": "two_column_right_sidebar",
+        "components": [
+          {
+            "type": "main_content",
+            "id": "blog_post",
+            "article": {
+              "title": "That Little Card is Your Biggest Comp",
+              "author": "Felt2Felt Staff",
+              "publish_date": "2025-06-15",
+              "featured_image": "url-to-blog-post-image.jpg",
+              "content_html": "<p>As a poker player, you know the house doesn't have an edge against your skill...</p><p>It's Not About Losses, It's About Hours...</p>"
+            }
+          },
+          {
+            "type": "sidebar",
+            "id": "blog_sidebar",
+            "widgets": [
+              {
+                "id": "all_intel",
+                "title": "All Intel",
+                "type": "post_list",
+                "posts": [
+                  { "title": "That Little Card is Your Biggest Comp", "href": "/blog/that-little-card" },
+                  { "title": "Cash in the Cage: A Guide to Bankroll Security", "href": "/blog/cash-in-cage" },
+                  { "title": "Don't Tilt Your Body: Staying Healthy on the Road", "href": "/blog/healthy-on-road" }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
