@@ -16,7 +16,7 @@ export default function Navbar() {
 
   return (
     <nav className="w-full flex items-center justify-between px-6 py-4 bg-black bg-opacity-80 backdrop-blur-md border-b border-neutral-800 z-50 relative">
-      <Link href="/homepage" className="text-2xl font-bold tracking-widest text-white neon-text">
+      <Link href="/" className="text-2xl font-bold tracking-widest text-white neon-text">
         felt2felt.com
       </Link>
       {/* Desktop Nav */}

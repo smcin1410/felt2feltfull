@@ -1,4 +1,4 @@
-const previews = [
+export const previews = [
   {
     id: 1,
     image: "/stock-photos/card-slot (1).jpeg",

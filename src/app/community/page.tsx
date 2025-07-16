@@ -2,6 +2,7 @@ import PromoBox from "@/components/PromoBox";
 import CommunitySearchAndFilter from "@/components/CommunitySearchAndFilter";
 import ResultsArea from "@/components/ResultsArea";
 import BlogPreviewList from "@/components/BlogPreviewList";
+import { previews } from "@/components/BlogPreviewList";
 
 export default function CommunityPage() {
   return (
@@ -17,6 +18,16 @@ export default function CommunityPage() {
             Create New Post
           </button>
         </div>
+      </div>
+      {/* Mobile-only horizontal scroll of blog previews */}
+      <div className="flex md:hidden overflow-x-auto gap-3 py-2 -mx-4 px-4">
+        {previews.slice(0, 10).map((post: { id: number; image: string; title: string; excerpt: string }) => (
+          <div key={post.id} className="min-w-[180px] max-w-[180px] bg-neutral-900 rounded-lg shadow flex flex-col items-center p-2 gap-2 cursor-pointer hover:bg-neutral-800 transition">
+            <img src={post.image} alt={post.title} className="w-full h-20 object-cover rounded mb-1" />
+            <h3 className="text-xs font-bold neon-text text-center leading-tight">{post.title}</h3>
+            <p className="text-[10px] text-gray-400 text-center line-clamp-2">{post.excerpt}</p>
+          </div>
+        ))}
       </div>
       <div className="flex flex-col md:flex-row gap-6 w-full">
         {/* Left: Blog Previews */}
