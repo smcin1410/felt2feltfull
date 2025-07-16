@@ -25,8 +25,13 @@ _Last updated: [July 25th 2025]_
   - Banner flush under navbar, blurred traffic image, Monoton font, no button in banner
   - "Create New Post" button to the right of banner (no glow)
   - Page split 15%/85%: left is scrollable blog previews (static), right is forum area (search/filter, results placeholder)
+  - **Mobile:** Horizontally scrollable row of up to 10 newest blog/article preview cards between the forum section and "The Community Pot" banner
 - **Blog:**
   - Two-column layout: main content (featured image with overlaid title and fade), sidebar with post list
+
+## UI/UX Improvements
+- **Navbar:** "felt2felt.com" logo now links to the homepage
+- **Font Consistency:** "The Community Pot" banner uses the Monoton font on all devices/pages
 
 ## Button Glow Effect
 - **Glowing buttons only on homepage:**

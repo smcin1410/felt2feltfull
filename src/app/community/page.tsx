@@ -3,13 +3,14 @@ import CommunitySearchAndFilter from "@/components/CommunitySearchAndFilter";
 import ResultsArea from "@/components/ResultsArea";
 import BlogPreviewList from "@/components/BlogPreviewList";
 import { previews } from "@/components/BlogPreviewList";
+import { monoton } from "../layout";
 
 export default function CommunityPage() {
   return (
     <main className="max-w-7xl mx-auto px-4 pt-0 pb-10 flex flex-col gap-6">
       <div className="relative">
         <PromoBox
-          title={<span className="font-monoton">THE COMMUNITY POT</span>}
+          title={<span className={monoton.className}>THE COMMUNITY POT</span>}
           subtitle="Share your stories, find travel partners, and get the real scoop from players on the felt."
           backgroundImage="/stock-photos/vegas-blurred-traffic.jpeg"
         />

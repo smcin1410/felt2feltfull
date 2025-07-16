@@ -3,6 +3,7 @@ import DynamicContent from "@/components/DynamicContent";
 import PromoBanner from "@/components/PromoBanner";
 import CardGrid from "@/components/CardGrid";
 import FeaturedPost from "@/components/FeaturedPost";
+import { monoton } from "./layout";
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
       />
       <DynamicContent title="Upcoming Tournaments" placeholder="Loading the latest events..." />
       <PromoBanner
-        title={<span className="font-monoton">THE COMMUNITY POT</span>}
+        title={<span className={monoton.className}>THE COMMUNITY POT</span>}
         subtitle="Share your stories, find travel partners, and get the real scoop from players on the felt."
         cta={{ text: "Join The Conversation", href: "/community" }}
         backgroundImage="/stock-photos/vegas-blurred-traffic.jpeg"
