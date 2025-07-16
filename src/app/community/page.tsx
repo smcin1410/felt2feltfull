@@ -33,7 +33,7 @@ export default function CommunityPage() {
       </div>
       <div className="flex flex-col md:flex-row gap-6 w-full">
         {/* Left: Blog Previews */}
-        <aside className="w-full md:w-[15%] max-w-xs flex-shrink-0">
+        <aside className="hidden md:block w-full md:w-[15%] max-w-xs flex-shrink-0">
           <BlogPreviewList />
         </aside>
         {/* Right: Forum Area */}
