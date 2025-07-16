@@ -3,7 +3,8 @@ import DynamicContent from "@/components/DynamicContent";
 import PromoBanner from "@/components/PromoBanner";
 import CardGrid from "@/components/CardGrid";
 import FeaturedPost from "@/components/FeaturedPost";
-import { monoton } from "./layout";
+import { Monoton } from "next/font/google";
+const monoton = Monoton({ subsets: ["latin"], weight: "400", display: "swap" });
 
 export default function Home() {
   return (

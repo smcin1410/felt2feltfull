@@ -3,7 +3,8 @@ import CommunitySearchAndFilter from "@/components/CommunitySearchAndFilter";
 import ResultsArea from "@/components/ResultsArea";
 import BlogPreviewList from "@/components/BlogPreviewList";
 import { previews } from "@/components/BlogPreviewList";
-import { monoton } from "../layout";
+import { Monoton } from "next/font/google";
+const monoton = Monoton({ subsets: ["latin"], weight: "400", display: "swap" });
 
 export default function CommunityPage() {
   return (
