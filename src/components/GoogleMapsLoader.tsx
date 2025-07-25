@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 declare global {
   interface Window {
     google: any;
-    initMap: () => void;
+    initMap?: () => void;
   }
 }
 
