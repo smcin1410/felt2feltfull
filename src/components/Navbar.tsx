@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { User, Search, Menu } from "lucide-react";
 import { useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const navLinks = [
   { id: "trip_designer", text: "Trip Designer", href: "/trip-designer" },
@@ -13,6 +14,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   return (
     <nav className="w-full flex items-center justify-between px-6 py-4 bg-black bg-opacity-80 backdrop-blur-md border-b border-neutral-800 z-50 relative">
@@ -28,16 +30,23 @@ export default function Navbar() {
         ))}
       </div>
       <div className="hidden md:flex gap-3">
-        <button className="flex items-center gap-2 px-4 py-2 rounded bg-pink-600 text-white hover:bg-pink-500 transition shadow">
-          <User size={20} />
-          <span>Sign In</span>
-        </button>
-        <button className="p-2 rounded-full bg-neutral-800 hover:bg-pink-600 transition">
+        {session ? (
+          <button onClick={() => signOut()} className="flex items-center gap-2 px-4 py-2 rounded bg-pink-600 text-white hover:bg-pink-500 transition shadow">
+            <User size={20} />
+            <span>Sign Out</span>
+          </button>
+        ) : (
+          <button onClick={() => signIn()} className="flex items-center gap-2 px-4 py-2 rounded bg-pink-600 text-white hover:bg-pink-500 transition shadow">
+            <User size={20} />
+            <span>Sign In</span>
+          </button>
+        )}
+        <button className="p-2 rounded-full bg-neutral-800 hover:bg-pink-600 transition" aria-label="Search" title="Search">
           <Search size={20} className="text-white" />
         </button>
       </div>
       {/* Hamburger for mobile */}
-      <button className="md:hidden p-2 rounded bg-neutral-800 text-white" onClick={() => setOpen((v) => !v)} aria-label="Open menu">
+      <button className="md:hidden p-2 rounded bg-neutral-800 text-white" onClick={() => setOpen((v) => !v)} aria-label="Open menu" title="Open menu">
         <Menu size={28} />
       </button>
       {/* Mobile Menu */}
@@ -48,11 +57,18 @@ export default function Navbar() {
               {link.text}
             </Link>
           ))}
-          <button className="flex items-center gap-2 px-4 py-2 rounded bg-pink-600 text-white hover:bg-pink-500 transition shadow">
-            <User size={20} />
-            <span>Sign In</span>
-          </button>
-          <button className="p-2 rounded-full bg-neutral-800 hover:bg-pink-600 transition">
+          {session ? (
+            <button onClick={() => { setOpen(false); signOut(); }} className="flex items-center gap-2 px-4 py-2 rounded bg-pink-600 text-white hover:bg-pink-500 transition shadow">
+              <User size={20} />
+              <span>Sign Out</span>
+            </button>
+          ) : (
+            <button onClick={() => { setOpen(false); signIn(); }} className="flex items-center gap-2 px-4 py-2 rounded bg-pink-600 text-white hover:bg-pink-500 transition shadow">
+              <User size={20} />
+              <span>Sign In</span>
+            </button>
+          )}
+          <button className="p-2 rounded-full bg-neutral-800 hover:bg-pink-600 transition" aria-label="Search" title="Search">
             <Search size={20} className="text-white" />
           </button>
         </div>

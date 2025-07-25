@@ -1,0 +1,584 @@
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app
+
+Name           : admin
+CreationTime   : 7/17/2025 8:41:41 AM
+LastWriteTime  : 7/17/2025 8:41:41 AM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+Name           : api
+CreationTime   : 7/17/2025 8:40:31 AM
+LastWriteTime  : 7/17/2025 8:40:31 AM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+Name           : auth
+CreationTime   : 7/17/2025 9:31:18 AM
+LastWriteTime  : 7/17/2025 9:31:18 AM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+Name           : blog
+CreationTime   : 7/15/2025 2:07:27 PM
+LastWriteTime  : 7/15/2025 2:07:27 PM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+Name           : community
+CreationTime   : 7/15/2025 2:06:47 PM
+LastWriteTime  : 7/15/2025 2:06:47 PM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+Name           : destinations
+CreationTime   : 7/15/2025 2:02:43 PM
+LastWriteTime  : 7/16/2025 9:26:19 AM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+Name           : tournaments
+CreationTime   : 7/15/2025 2:05:47 PM
+LastWriteTime  : 7/15/2025 2:05:47 PM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+Name           : trip-designer
+CreationTime   : 7/15/2025 2:00:14 PM
+LastWriteTime  : 7/24/2025 7:46:58 AM
+LastAccessTime : 7/24/2025 10:49:20 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+Name           : favicon.ico
+Length         : 25931
+CreationTime   : 7/15/2025 12:18:54 PM
+LastWriteTime  : 7/15/2025 12:14:46 PM
+LastAccessTime : 7/24/2025 8:33:38 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\favicon.ico
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : globals.css
+Length         : 4863
+CreationTime   : 7/15/2025 12:18:54 PM
+LastWriteTime  : 7/17/2025 8:34:05 AM
+LastAccessTime : 7/24/2025 11:09:54 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\globals.css
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : layout.tsx
+Length         : 1265
+CreationTime   : 7/15/2025 12:18:54 PM
+LastWriteTime  : 7/23/2025 2:29:23 PM
+LastAccessTime : 7/24/2025 11:09:54 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\layout.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : page.tsx
+Length         : 2189
+CreationTime   : 7/15/2025 12:18:54 PM
+LastWriteTime  : 7/16/2025 2:10:20 PM
+LastAccessTime : 7/24/2025 9:03:28 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\page.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\admin
+
+Name           : page.tsx
+Length         : 1688
+CreationTime   : 7/17/2025 8:41:41 AM
+LastWriteTime  : 7/17/2025 10:02:21 AM
+LastAccessTime : 7/24/2025 7:01:09 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\admin\page.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\api
+
+Name           : auth
+CreationTime   : 7/17/2025 8:40:31 AM
+LastWriteTime  : 7/17/2025 8:40:31 AM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\api\auth
+
+Name           : [...nextauth]
+CreationTime   : 7/17/2025 8:40:31 AM
+LastWriteTime  : 7/17/2025 8:40:31 AM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\api\auth\[...nextauth]
+
+Name           : route.ts
+Length         : 2110
+CreationTime   : 7/17/2025 8:40:31 AM
+LastWriteTime  : 7/17/2025 9:31:10 AM
+LastAccessTime : 7/24/2025 7:01:09 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\api\auth\[...nextauth]\route.ts
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\auth
+
+Name           : signin
+CreationTime   : 7/17/2025 9:31:18 AM
+LastWriteTime  : 7/17/2025 9:31:18 AM
+LastAccessTime : 7/24/2025 10:44:22 AM
+Mode           : d----
+LinkType       : 
+Target         : 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\auth\signin
+
+Name           : page.tsx
+Length         : 2012
+CreationTime   : 7/17/2025 9:31:18 AM
+LastWriteTime  : 7/21/2025 7:16:42 AM
+LastAccessTime : 7/24/2025 7:01:09 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\auth\signin\page.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\blog
+
+Name           : page.tsx
+Length         : 337
+CreationTime   : 7/15/2025 2:07:27 PM
+LastWriteTime  : 7/24/2025 7:01:07 AM
+LastAccessTime : 7/24/2025 7:01:07 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\blog\page.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\community
+
+Name           : page.tsx
+Length         : 2467
+CreationTime   : 7/15/2025 2:06:47 PM
+LastWriteTime  : 7/16/2025 2:27:13 PM
+LastAccessTime : 7/24/2025 7:01:09 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\community\page.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\destinations
+
+Name           : page.tsx
+Length         : 4193
+CreationTime   : 7/16/2025 9:26:19 AM
+LastWriteTime  : 7/23/2025 1:36:53 PM
+LastAccessTime : 7/24/2025 11:09:54 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\destinations\page.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\tournaments
+
+Name           : page.tsx
+Length         : 5183
+CreationTime   : 7/15/2025 2:05:47 PM
+LastWriteTime  : 7/22/2025 1:54:54 PM
+LastAccessTime : 7/24/2025 11:09:54 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\tournaments\page.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+
+    Directory: C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer
+
+Name           : DateSelector.tsx
+Length         : 2909
+CreationTime   : 7/24/2025 7:38:40 AM
+LastWriteTime  : 7/24/2025 7:38:44 AM
+LastAccessTime : 7/24/2025 9:03:30 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer\DateSelector.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : DestinationManager.tsx
+Length         : 2189
+CreationTime   : 7/24/2025 7:41:55 AM
+LastWriteTime  : 7/24/2025 7:42:12 AM
+LastAccessTime : 7/24/2025 9:03:30 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer\DestinationManager.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : ExpenseTracker.tsx
+Length         : 3605
+CreationTime   : 7/24/2025 7:44:23 AM
+LastWriteTime  : 7/24/2025 7:44:27 AM
+LastAccessTime : 7/24/2025 9:03:30 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer\ExpenseTracker.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : GroupChat.tsx
+Length         : 2226
+CreationTime   : 7/24/2025 7:46:58 AM
+LastWriteTime  : 7/24/2025 7:46:58 AM
+LastAccessTime : 7/24/2025 9:03:30 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer\GroupChat.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : InviteSystem.tsx
+Length         : 1804
+CreationTime   : 7/24/2025 7:45:00 AM
+LastWriteTime  : 7/24/2025 7:45:01 AM
+LastAccessTime : 7/24/2025 9:03:30 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer\InviteSystem.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : ItineraryManager.tsx
+Length         : 5256
+CreationTime   : 7/24/2025 7:39:59 AM
+LastWriteTime  : 7/24/2025 7:43:37 AM
+LastAccessTime : 7/24/2025 9:03:30 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer\ItineraryManager.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : page.tsx
+Length         : 4777
+CreationTime   : 7/15/2025 2:00:14 PM
+LastWriteTime  : 7/24/2025 7:47:47 AM
+LastAccessTime : 7/24/2025 11:09:54 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer\page.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : TravelerManager.tsx
+Length         : 1750
+CreationTime   : 7/24/2025 7:40:41 AM
+LastWriteTime  : 7/24/2025 7:40:45 AM
+LastAccessTime : 7/24/2025 9:03:30 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer\TravelerManager.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
+Name           : VotingSystem.tsx
+Length         : 3211
+CreationTime   : 7/24/2025 7:46:08 AM
+LastWriteTime  : 7/24/2025 7:46:08 AM
+LastAccessTime : 7/24/2025 9:03:30 AM
+Mode           : -a---
+LinkType       : 
+Target         : 
+VersionInfo    : File:             C:\Users\Administrator2024\felt2felt-full\src\app\trip-designer\VotingSystem.tsx
+                 InternalName:     
+                 OriginalFilename: 
+                 FileVersion:      
+                 FileDescription:  
+                 Product:          
+                 ProductVersion:   
+                 Debug:            False
+                 Patched:          False
+                 PreRelease:       False
+                 PrivateBuild:     False
+                 SpecialBuild:     False
+                 Language:         
+                 
+
