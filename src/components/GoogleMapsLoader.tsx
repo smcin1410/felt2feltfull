@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
 
+declare global {
+  interface Window {
+    google: any;
+    initMap: () => void;
+  }
+}
+
 const GOOGLE_MAPS_SRC = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
 
 export default function GoogleMapsLoader({ children }: { children: React.ReactNode }) {
@@ -13,17 +20,17 @@ export default function GoogleMapsLoader({ children }: { children: React.ReactNo
     }
     const scriptId = "google-maps-script";
     if (document.getElementById(scriptId)) {
-      (window as any).initMap = () => setLoaded(true);
+      window.initMap = () => setLoaded(true);
       return;
     }
     const script = document.createElement("script");
     script.id = scriptId;
     script.src = GOOGLE_MAPS_SRC + "&callback=initMap";
     script.async = true;
-    (window as any).initMap = () => setLoaded(true);
+    window.initMap = () => setLoaded(true);
     document.body.appendChild(script);
     return () => {
-      delete (window as any).initMap;
+      delete window.initMap;
     };
   }, []);
 
